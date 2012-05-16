@@ -1,4 +1,15 @@
+require "mongoid"
+require 'haml'
+require 'sinatra/base'
+require 'sinatra/support'
+require "sinatra"
 require 'thin'
+require 'tilt'
+require "tilt"
+require "haml"
+require "sass"
+require "slim"
+require "coffee-script"
 require 'encryptor'
 
 CONFIG = {}
@@ -27,17 +38,19 @@ module Classiccms
     #require Application file
     require File.join(Dir.pwd, 'config/application') #if File.exist?(File.join(Dir.pwd, 'config/application'))
 
-    #FROM App
-    #require models
-    Dir[File.join(Dir.pwd, 'models/*.rb')].each {|file| require file }
 
     #From gem
     #require models
     Dir[File.join(File.dirname(__FILE__), 'models/*.rb')].each {|file| require file }
 
+    #FROM App
+    #require models
+    Dir[File.join(Dir.pwd, 'models/*.rb')].each {|file| require file }
+
     #FROM Gem
     #require mongoid
-    require File.join(File.dirname(__FILE__), 'mongoid.rb')
+    Mongoid.load!(File.join(ROOT, 'mongoid.yml'))
+    #require File.join(File.dirname(__FILE__), 'mongoid.rb')
 
     #require helpers
     require File.join(File.dirname(__FILE__), 'helpers.rb')
