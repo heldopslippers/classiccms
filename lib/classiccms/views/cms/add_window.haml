@@ -1,0 +1,13 @@
+#iki
+  .background
+  #logo
+  #edit_box
+    /- models.each do |model|
+    = show :form, {}, {:record => record}
+    #edit_bottom
+    #edit_bottom_nav
+      - if !record.new?
+        .delete{:id => record.id}
+        .delete_item item verwijderen
+      .cancel
+      .save

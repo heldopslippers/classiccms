@@ -1,0 +1,376 @@
+@mixin opacity($value)
+  opacity: #{"." + $value}
+  filter: alpha(opacity=$value)
+  -ms-filter: "alpha(opacity=$value)"
+  -khtml-opacity: #{"." + $value}
+  -webkit-opacity: #{"." + $value}
+  -moz-opacity: #{"." + $value}
+
+#iki
+  :position relative
+  :width 100%
+  :height 100%
+  :color #fff
+  :font-family AllerRegular
+  label, label a
+    :font-family AllerBold
+    :font-size 12px
+    :color white
+  .background
+    :width 100%
+    :height 100%
+    :background-color #000
+    @include opacity(70)
+    :position fixed
+    :z-index 1010
+
+  #logo
+    :width 203px
+    :height 54px
+    :position absolute
+    :top 20px
+    :left 30px
+    :background-image url('/cms/images/briljandtCMS.png')
+    :z-index 1020
+  #error, #login
+    :width 315px
+    :height 315px
+    :position absolute
+    :z-index 1030
+    :left 40%
+    :top 30%
+  #error
+    :width 315px
+    :height 315px
+    :position absolute
+    :z-index 1040
+    :left 40%
+    :top 30%
+    :background-image url('/cms/images/error.png')
+  #login
+    :background-image url('/cms/images/login_bg.png')
+
+    input
+      :width 165px
+      :height 18px
+      :margin-right 75px
+      :border 0px
+      :background-color #4c4c4c
+      :color #fff
+      :font-size 12px
+      :float left
+      :margin-left 75px
+    input.top
+      :margin-top 109px
+    input.bottom
+      :margin-top 56px
+
+    input.button
+      :margin-left 200px
+      :margin-top 15px
+      :height auto
+      :width auto
+      :cursor pointer
+
+  #right_bottom:hover a
+    text-decoration: underline
+  #right_bottom
+    :position absolute
+    :bottom 30px
+    :right 30px
+    :z-index 1020
+    :font-weight bold
+    :cursor pointer
+  
+    .white_arrow
+      :background-image url('/cms/images/white_arrow.png')
+      :width 28px
+      :height 19px
+      :float left
+      :margin-right 5px
+  #edit_box
+    :width 704px
+    :margin-top -640px
+    :height auto
+    :position absolute
+    :top 0
+    :left 50%
+    :margin-left -352px
+    :z-index 1020
+    .nav.top
+      :margin-bottom 10px
+      :margin-top -10px
+    .nav.bottom
+      :margin-bottom 10px
+      :margin-top -3px
+    .nav
+      :float left
+      :height 18px
+      :width 100%
+      ul
+        :float left
+        :width 100%
+        :height 18px
+        :list-style-type none
+        li
+          :float right
+          :width auto
+          :margin-left -5px
+          :cursor pointer
+          
+          .left
+            :background-image url('/cms/images/menu_left.png')
+            :width 14px
+            :height 18px
+            :float left
+          a
+            :background-image url('/cms/images/menu_bg.png')
+            :width auto
+            :height 18px
+            :float left
+            
+          .right
+            :background-image url('/cms/images/menu_right.png')
+            :width 14px
+            :height 18px
+            :float left
+        li:hover .left, li:hover .right
+          :visibility hidden
+        li:hover a
+          :background-image url('')
+    #edit_bg
+      :background-image url('/cms/images/edit_bg.png')
+      :width 684px
+      :height 100%
+      :float left
+      :z-index 3
+      :padding 10px
+      label
+        :width 100%
+        :height 25px
+        :float left
+        :padding-left 3px
+        :font-weight bold
+      input.textfield
+        :width 674px
+        :height 25px
+        :background-image url('/cms/images/input.png')
+        :border 0px
+        :background-color inherit
+        :padding-left 5px
+        :padding-right 5px
+        :margin-bottom 10px
+      input.radiobuttons
+      #text_editor
+        :float left
+        :height 50px
+        :width 100%
+        :margin-top 10px
+      .bar
+        :float left
+        :height auto
+        :width 100%
+        :margin-bottom 10px
+        a
+          :float left
+          :margin-right 10px
+      .radiobutton, .radiobutton_checked, .checkbox, .checkbox_checked
+        :height 13px
+        :width 13px
+        :cursor pointer
+        :float left
+        :margin 3px
+      .radiobutton
+        :background-image url('/cms/images/radio.png')
+      .radiobutton_checked
+        :background-image url('/cms/images/radio_checked.png')
+      .checkbox
+        :background-image url('/cms/images/checkbox.png')
+      .checkbox_checked
+        :background-image url('/cms/images/checkbox_checked.png')
+      .dropdown1 
+        :margin-left 5px
+        :position relative
+        :z-index 1000
+        :width 677px
+        :height auto
+        :float left
+        :cursor pointer
+        :color #000
+        .dropdown1_top
+          :height 10px
+          :width 677px
+          :float left
+          .left
+            :float left
+            :width 10px
+            :background-image url('/cms/images/round_left_top.png')
+            :background-repeat no-repeat
+            :height 10px
+          .mid
+            :margin-left -1px
+            :float left
+            :background-image url('/cms/images/round_mid_top.png')
+            :width 658px
+            a
+              :height 12px
+              :margin-top 1px
+              :width 600px
+              :z-index 2000
+              :position relative
+              :padding 1px 10px 5px 0px
+          .right
+            :float left
+            :width 10px
+            :background-image url('/cms/images/round_right_top.png')
+            :background-repeat no-repeat
+            :height 10px
+        .hack
+          :background-color #fff
+          :width 676px
+          :float left
+          :height 5px
+        .dropdown1_mid
+          :background-color #fff
+          :float left
+          :width 676px
+          :overflow scroll
+          :height 100px
+          .item
+            :float left
+            :width 676px
+            :height 15px
+            :padding 5px 10px 5px 10px
+            :background-color #fff
+            :clear both
+          .item:hover
+            :background-color #e2e2e2
+  
+        .dropdown1_bottom
+          :float left
+          :height 15px
+          :width 677px
+          .left
+            :float left
+            :width 10px
+            :background-image url('/cms/images/round_left_bottom.png')
+            :background-repeat no-repeat
+            :height 10px
+          .mid
+            :margin-left -1px
+            :float left
+            :background-image url('/cms/images/round_mid_bottom.png')
+            :width 658px
+            :height 10px
+          .right
+            :float left
+            :width 10px
+            :background-image url('/cms/images/round_right_bottom.png')
+            :background-repeat no-repeat
+            :height 10px
+    #edit_bottom
+      :background-image url('/cms/images/edit_bg_bottom.png')
+      :float left
+      :height 29px
+      :width 704px
+      :z-index 3
+    #edit_bottom_nav
+      :width 704px
+      :height 30px
+      :float left
+      :margin-top -6px
+      :position relative
+      :z-index -2
+
+  .delete
+    :background-image url('/cms/images/delete.png')
+    :width 63px
+    :height 27px
+    :float left
+    :margin-left 40px
+    :cursor pointer
+    :z-index 2
+    :position relative
+  .delete_item, .delete_item .active
+    :background-repeat no-repeat
+    :width 86px
+    :height 18px
+    :float left
+    :margin-left -45px
+    :cursor pointer
+    :z-index -10
+    :font-size 10px
+    :padding 3px 6px 0px 15px
+    :background-position -60px
+    :font-size 0px
+  .delete_item
+    :background-image url('/cms/images/delete_item.png')
+    &.active
+      :background-image url('/cms/images/delete_item_hover.png')
+  .save
+    :background-image url('/cms/images/save.png')
+    :width 63px
+    :height 27px
+    :float right
+    :margin-right 10px
+    :cursor pointer
+  .cancel
+    :background-image url('/cms/images/cancel.png')
+    :width 63px
+    :height 27px
+    :float right
+    :margin-right 30px
+    :cursor pointer
+  .delete.active
+    :background-image url('/cms/images/delete_hover.png')
+
+  .save:hover
+    :background-image url('/cms/images/save_hover.png')
+  .cancel:hover
+    :background-image url('/cms/images/cancel_hover.png')
+
+  #cke_top_editor1
+    :background-color #020302
+  .cke_skin_kama .cke_browser_gecko .cke_button .cke_label, .cke_skin_kama .cke_browser_gecko .cke_break
+    :color white
+
+  #cke_bottom_editor1
+    :display none
+  .cke_toolbox
+    :position relative
+  .css-scrollbar
+    :width 250px
+    :height 450px
+    :margin 100px 25px
+    :-moz-box-shadow 0px 0px 12px 3px #CCC
+    :overflow hidden
+    :float left
+    :background blue
+  .css-scrollbar.simple
+    :width 250px
+    :height 150px
+    :margin 100px 25px
+    :overflow hidden
+    :float left
+    :background red
+    :-moz-box-shadow none
+    :border none
+  
+  .css-scrollbar p
+    :margin 0 
+    :padding 8px
+    :line-height 1.4
+  .scrollbar-handle
+    :width 10px
+    :height 10px
+    :background-color #d6d6d6
+  a
+    :float left
+  p
+    :color #d6d6d6
+    :margin-left 5px
+    :margin-top 3px
+    :font-size 10px
+    position: relative
+    float: left
+    

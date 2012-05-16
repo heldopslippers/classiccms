@@ -1,0 +1,22 @@
+defaults: &defaults
+  host: 127.0.0.1
+  port: 27017
+  logger: false
+  # slaves:
+  #   - host: slave1.local
+  #     port: 27018
+  #   - host: slave2.local
+  #     port: 27019
+
+development:
+  <<: *defaults
+  database: ClassicCMS_development
+
+test:
+  <<: *defaults
+  database: ClassicCMS_test
+
+# set these environment variables on your prod server
+production:
+  <<: *defaults
+  database: ClassicCMS

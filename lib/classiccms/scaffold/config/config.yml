@@ -1,0 +1,11 @@
+defaults: &defaults
+  home: application/index
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -1,0 +1,35 @@
+%form{:action=>"/cms/#{record.new? ? 'create' : 'update' }", :method=>'post', :enctype=>'multypart/form-date'}
+  #edit_bg
+    - if !record.new?
+      %input{:type=>'hidden', :name=> "id", :value=> record.id}
+    - model = record.class
+    - model.fields.each do |key, info|
+      - if !["_type", "_id", "created_at", "updated_at", "version", "deleted_at"].include? key
+        %label
+          %a= key
+          %p
+        - case info.options[:input]
+        - when 'input'
+          %input{:type=> 'text', :name=> key, :value=> record[key], :class=>"textfield", :type=> "text"}
+        - when 'textarea'
+          %textarea{:id => key, :name=> key}= record[key]
+        - when 'dropdown'
+        - when 'image'
+          %a.image_select selecteer afbeelding
+          %input{:type => 'hidden', :name=> name, :value => ''}
+        - when 'images'
+        - else
+          %label Comming soon
+    - if record.new?
+      - record.connections.each do |connection|
+        %input{:type=> 'hidden', :name=> "[connections][][id]",      :value => connection.id}
+        %input{:type=> 'hidden', :name=> "[connections][][parent]",  :value => connection.parent}
+        %input{:type=> 'hidden', :name=> "[connections][][section]", :value => connection.section}
+        - if connection.files == nil
+          %input{:type=> 'hidden', :name=> "[connections][][file]", :value => connection.section}
+        - elsif connection.files.count == 1
+          %input{:type=> 'hidden', :name=> "[connections][][file]", :value => connection.files.first}
+        - elsif connection.files.count > 1
+          %select{:name => "[connections][][file]"}
+            - connection.files.each do |file|
+              %option{:value => file}= file

@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'classicCMS/cli'
+ClassicCMS::Cli.command(ARGV)
