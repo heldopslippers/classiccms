@@ -1,3 +1,0 @@
-class Article < Base
-
-end
