@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Classiccms::VERSION
   s.authors     = ["jeljer te Wies"]
   s.email       = ["heldopslippers@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/heldopslippers/classiccms"
   s.summary     = %q{An easy to use wrapper for creating basic and more complicated websites}
   s.description = %q{Webcms is a wrapper that automatigically will create a layer. It enables programmers to quickly build and release websites with CRUD CMS capabilities}
 
