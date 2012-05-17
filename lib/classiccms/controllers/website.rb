@@ -2,7 +2,7 @@ require 'classiccms/controllers/application'
 
 module Classiccms
   class WebsiteController < ApplicationController
-    set :multi_views,   [ File.join(Dir.pwd, 'views')]
+    set :multi_views,   [ File.join(Dir.pwd, 'app/views')]
     set :root, Dir.pwd
     set :public_folder, Proc.new { File.join(Dir.pwd, 'public') }
 
@@ -13,13 +13,13 @@ module Classiccms
       @routes = get_route(get_first_item)
       show index
     end
-    get '/js/*.js' do
+    get '/javascripts/*.js' do
       response.headers['Cache-Control'] = ENV['RACK_ENV'] == 'development' ? 'no-cache' : 'public, max-age=86400'
-      show params[:splat].join, :views => [File.join(Dir.pwd, 'assets/js')]
+      show params[:splat].join, :views => [File.join(Dir.pwd, 'public/javascripts')]
     end
-    get '/css/*.css' do
+    get '/stylesheets/*.css' do
       response.headers['Cache-Control'] = ENV['RACK_ENV'] == 'development' ? 'no-cache' : 'public, max-age=86400'
-      show params[:splat].join, :views => [File.join(Dir.pwd, 'assets/css')]
+      show params[:splat].join, :views => [File.join(Dir.pwd, 'public/stylesheets')]
     end
     get '/:id/?*' do
       response.headers['Cache-Control'] = 'no-cache'

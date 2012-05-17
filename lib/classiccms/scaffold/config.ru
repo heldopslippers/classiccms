@@ -1,11 +1,10 @@
-#require 'bundler'
-#Bundler.setup
-#Bundler.require(:default, ENV['RACK_ENV'].to_sym)
-ClassicCMS::Application
+require 'classiccms/application'
+
+ENV['RACK_ENV'] = 'development'
+Classiccms.boot
 
 
 run Rack::URLMap.new({
-  '/'          => WebsitesController,
-  '/cms'       => CMSController,
-  '/code'      => CodeController
+  '/'          => Classiccms::WebsiteController,
+  '/cms'       => Classiccms::CMSController,
 })

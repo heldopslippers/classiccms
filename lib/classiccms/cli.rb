@@ -6,6 +6,7 @@ module Classiccms
       case arguments[0]
       when 'new'    then self.new arguments[1]
       when 'server' then self.server
+      when '-v' then puts "version #{VERSION}"
       else
         puts "you are so smart! I don't know what you mean! (try using new or server)"
       end
@@ -25,16 +26,7 @@ module Classiccms
     end
     def self.server
       #first check if this is actualy an app
-      if File.directory? 'config'  and  File.directory? 'models'
-        puts 'Going to start server...'
-
-        #Initialize app with application file
-        require 'classiccms/application'
-        Classiccms.boot
-      else
-        puts 'not an app! Try running:'
-        puts 'classicCMS new [app name]'
-      end
+      system('rackup')
     end
   end
 end

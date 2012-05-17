@@ -1,5 +1,6 @@
 defaults: &defaults
   home: application/index
+  database: hello
 
 development:
   <<: *defaults

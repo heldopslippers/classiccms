@@ -45,7 +45,7 @@ module Classiccms
 
     #FROM App
     #require models
-    Dir[File.join(Dir.pwd, 'models/*.rb')].each {|file| require file }
+    Dir[File.join(Dir.pwd, 'app/models/*.rb')].each {|file| require file }
 
     #FROM Gem
     #require mongoid

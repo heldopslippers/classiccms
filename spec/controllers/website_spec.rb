@@ -84,44 +84,44 @@ describe Classiccms do
 
   describe 'js' do
     it 'should render coffeescript' do
-      set_file "assets/js/index.coffee", "h = 24"
-      get '/js/index.js'
+      set_file "../public/javascripts/index.coffee", "h = 24"
+      get '/javascripts/index.js'
       last_response.body.should match("var h;")
     end
     it 'should render js' do
-      set_file "assets/js/index1.js", "function(){alert('hello');}"
-      get '/js/index1.js'
+      set_file "../public/javascripts/index1.js", "function(){alert('hello');}"
+      get '/javascripts/index1.js'
       last_response.body.should == "function(){alert('hello');}\n"
     end
     it 'should except directories' do
-      create_dir 'assets/js/test'
-      set_file "assets/js/test/index1.js", "function(){alert('boom');}"
-      get '/js/test/index1.js'
+      create_dir '../public/javascripts/test'
+      set_file "../public/javascripts/test/index1.js", "function(){alert('boom');}"
+      get '/javascripts/test/index1.js'
       last_response.body.should == "function(){alert('boom');}\n"
     end
   end
   describe 'css' do
     it 'should render sass' do
-      set_file "assets/css/index.sass", ".main\n  :color white"
-      get '/css/index.css'
+      set_file "../public/stylesheets/index.sass", ".main\n  :color white"
+      get '/stylesheets/index.css'
       last_response.body.should == ".main {\n  color: white; }\n"
     end
     it 'should return css' do
-      set_file "assets/css/index1.css", ".main{color: black;}"
-      get '/css/index1.css'
+      set_file "../public/stylesheets/index1.css", ".main{color: black;}"
+      get '/stylesheets/index1.css'
       last_response.body.should == ".main{color: black;}\n"
     end
     it 'should except directories' do
-      create_dir 'assets/css/test'
-      set_file "assets/css/test/index1.css", "css"
-      get '/css/test/index1.css'
+      create_dir '../public/stylesheets/test'
+      set_file "../public/stylesheets/test/index1.css", "css"
+      get '/stylesheets/test/index1.css'
       last_response.body.should == "css\n"
     end
   end
 
   describe 'public' do
     it 'should return the image' do
-      set_file "public/test.png", "hello"
+      set_file "../public/test.png", "hello"
       get '/test.png'
       last_response.body.should == "hello\n"
     end

@@ -33,19 +33,20 @@ end
 
 #helper method to set files
 def set_file(file, content)
-  File.open(File.join(Dir.pwd, file), 'w+') do |f|
+  File.open(File.join(Dir.pwd, 'app', file), 'w+') do |f|
     f.puts content
   end
 end
 
 #helper method to create directories in app
 def create_dir(dir)
-  Dir::mkdir dir if !File.directory? dir
+  Dir::mkdir 'app/' + dir if !File.directory? 'app/' + dir
 end
+
 
 #require all models
 def require_models
-  Dir[File.join(Dir.pwd, 'models/*.rb')].each {|file| require file }
+  Dir[File.join(Dir.pwd, 'app/models/*.rb')].each {|file| require file }
 end
 
 #setup application and start server into in
