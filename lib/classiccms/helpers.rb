@@ -54,9 +54,14 @@ module Classiccms
     end
 
     #returns the html for add button
-    def add(model, position, section, *files)
-      if model.kind_of? Class and @user != nil
-        info = Base64.encode64({:model => model, :position => get_parent_id(position), :section => section, :files => files}.to_s.encrypt)
+    def add(*items)
+      items.each do |item|
+        if item.class == Array
+          item[1] = get_parent_id(item[1])
+        end
+      end
+      if @user != nil
+        info = Base64.encode64(items.to_s.encrypt)
         show :add, {views: File.join(Classiccms::ROOT, 'views/cms')}, {encrypteddata: info}
       end
     end
@@ -65,7 +70,7 @@ module Classiccms
     def edit(id)
       records = Base.where(_id: id)
       if records.count > 0 and @user != nil
-        info = Base64.encode64 records.first.to_s.encrypt
+        info = Base64.encode64 records.first.id.to_s.encrypt
 
         show :edit, {views: File.join(Classiccms::ROOT, 'views/cms')}, {encrypteddata: info}
       end

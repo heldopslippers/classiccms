@@ -54,7 +54,7 @@ class TopPanel
 
   listen: ->
     $j(@p.cancel).click => @hide()
-    $j(@p.create).click => @create('/cms/form')
+    $j(@p.create).click => @create('/cms/save')
     $j(@p.destroy).click (event) => @destroy('/cms/destroy', $(event.target).attr('id'))
     $j(@p.image_button).click => new Popup
     @delete_button_hover()

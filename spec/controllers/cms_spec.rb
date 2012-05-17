@@ -32,42 +32,42 @@ describe Classiccms do
     it 'should return html' do
       login
       m = Menu.new
-      string = {:model => Menu, :position => 0, :section => 'hello', :files => []}
+      string = Base64.encode64([[Menu, 0, 'hello']].to_s.encrypt)
       post '/add', {:cms => string}
       last_response.body.should match("class='background'")
     end
     it 'should not include id input if record is new' do
       login
       m = Menu.new
-      string = {:model => Menu, :position => 0, :section => 'hello', :files => []}
+      string = Base64.encode64([[Menu, 0, 'hello']].to_s.encrypt)
       post '/add', {:cms => string}
       last_response.body.should_not match("name='input'")
     end
     it 'should return name key' do
       login
       m = Menu.new
-      string = {:model => Menu, :position => 0, :section => 'hello', :files => []}
+      string = Base64.encode64([[Menu, 0, 'hello']].to_s.encrypt)
       post '/add', {:cms => string}
-      last_response.body.should match("name='name'")
+      last_response.body.should match("[Menu][name]")
     end
     it 'should include file name for connections' do
       login
       m = Menu.new
-      string = {:model => Menu, :position => 0, :section => 'hello', :files => []}
+      string = Base64.encode64([[Menu, 0, 'hello']].to_s.encrypt)
       post '/add', {:cms => string}
-      last_response.body.include?("name='[connections][][file]'").should == true
+      last_response.body.include?("name='[Menu][connections][][file]'").should == true
     end
     it 'should include section for file' do
       login
       m = Menu.new
-      string = {:model => Menu, :position => 0, :section => 'hello', :files => []}
+      string = Base64.encode64([[Menu, 0, 'hello']].to_s.encrypt)
       post '/add', {:cms => string}
       last_response.body.should match("value='hello'")
     end
     it 'should have the form pointed to cms/create' do
       login
       m = Menu.new
-      string = {:model => Menu, :position => 0, :section => 'hello', :files => []}
+      string = Base64.encode64([[Menu, 0, 'hello']].to_s.encrypt)
       post '/add', {:cms => string}
       last_response.body.should match("action='/cms/create'")
     end
@@ -76,23 +76,23 @@ describe Classiccms do
   describe 'edit' do
     it 'should not return anything if id does not exist' do
       login
-      post '/edit', {:id => ''}
+      post '/edit', {:cms => ''}
       last_response.body.should == ''
     end
     it 'should display delete button' do
       login
-      post '/edit', {:id => Menu.create.id}
+      post '/edit', {:cms => Menu.create.id}
       last_response.body.should match("class='delete'")
     end
     it 'should set form action for update' do
       login
-      post '/edit', {:id => Menu.create.id}
+      post '/edit', {:cms => Menu.create.id}
       last_response.body.should match("action='/cms/update'")
     end
     it 'should add hidden input for id' do
       login
-      post '/edit', {:id => Menu.create.id}
-      last_response.body.should match("name='id'")
+      post '/edit', {:cms => Menu.create.id}
+      last_response.body.should match("[Menu][id]")
     end
   end
 
@@ -121,10 +121,10 @@ describe Classiccms do
       Menu.find(m2.id).connections.first.order_id.should == 1
     end
   end
-  describe 'save' do
+  describe 'create' do
     before :each do
       login
-      post '/create', {:Menu => {:name => 'hello', :connections_attributes => [{:section => 'menu'}]}}
+      post '/save', {:Menu => {:name => 'hello', :connections_attributes => [{:section => 'menu'}]}}
     end
     it 'should save the item' do
       Menu.all.count.should == 1
@@ -139,7 +139,7 @@ describe Classiccms do
       Menu.first.connections.first.section.should == 'menu'
     end
     it 'should return errors when creation fails' do
-      post '/create', {:Menu => {:name => 'woohooooooooooooooooooooo', :connections_attributes => [{:section => 'menu'}]}}
+      post '/save', {:Menu => {:name => 'woohooooooooooooooooooooo', :connections_attributes => [{:section => 'menu'}]}}
       last_response.body.should == "{\"name\":[\"is too long (maximum is 10 characters)\"]}"
     end
   end
@@ -147,7 +147,7 @@ describe Classiccms do
     before :each do
       login
       m = Menu.create
-      post '/update', {:Menu => {:id => m.id, :name => 'hello', :connections_attributes => [{:section => 'menu'}]}}
+      post '/save', {:Menu => {:id => m.id, :name => 'hello', :connections_attributes => [{:section => 'menu'}]}}
     end
     it 'should save the item' do
       Menu.all.count.should == 1
@@ -162,7 +162,8 @@ describe Classiccms do
       Menu.first.connections.first.section.should == 'menu'
     end
     it 'should return errors when creation fails' do
-      post '/create', {:Menu => {:name => 'woohooooooooooooooooooooo', :connections_attributes => [{:section => 'menu'}]}}
+      m = Menu.create
+      post '/save', {:Menu => {:id => m.id, :name => 'woohooooooooooooooooooooo', :connections_attributes => [{:section => 'menu'}]}}
       last_response.body.should == "{\"name\":[\"is too long (maximum is 10 characters)\"]}"
     end
   end

@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'classiccms/version'
 
 module Classiccms
   class Cli

@@ -27,7 +27,7 @@ module Classiccms
         session[:user_id] = user.id
         redirect to(params[:correct] != nil ? params[:correct] : '/')
       else
-        redirect to(params[:incorrect] != nil ? params[:incorrect] : '/')
+        redirect to(params[:incorrect] != nil ? params[:incorrect] : '/login')
       end
     end
     get '/logout' do

@@ -12,19 +12,26 @@ module Classiccms
     set :public_folder, Proc.new { File.join(Classiccms::ROOT, 'public') }
 
     post '/add' do
-      if !params['cms'].nil?
+      if params['cms'] != nil and params['cms'].length > 2
         begin
-          record = Kernel.const_get(params['cms']['model']).new
+          params['cms'] = Base64.decode64(params['cms']).decrypt
+          new = eval(params['cms']).first
+          record = new[0].new
 
-          record.connections << Connection.new(:parent => params['cms']['position'], :section => params['cms']['section'], :files => params['cms']['files'])
+          record.connections << Connection.new(:parent => new[1], :section => new[2], :files => new[2..new.length])
           show :add_window, {}, {:record => record}
-        rescue TypeError
+        rescue TypeError, ArgumentError
           ''
         end
       end
     end
     post '/edit' do
-      records = Base.where(_id: params['id'])
+      begin
+        params['cms'] = Base64.decode64(params['cms']).decrypt
+      rescue
+        ''
+      end
+      records = Base.where(_id: params['cms'])
       if records.count > 0
         record = records.first
         show :add_window, {}, {:record => record}
@@ -46,23 +53,14 @@ module Classiccms
       end
     end
 
-    post '/create' do
+    post '/save' do
       params.each do |key, value|
         begin
-          record = Kernel.const_get(key).new(value)
-        rescue Typeerror
-          ''
-        end
-        if !record.save
-          content_type :json
-          return record.errors.messages.to_json
-        end
-      end
-    end
-    post '/update' do
-      params.each do |key, value|
-        begin
-          record = Kernel.const_get(key).find(value['id'])
+          if value['id'] != nil
+            record = Kernel.const_get(key).find(value['id'])
+          else
+            record = Kernel.const_get(key).new
+          end
           record.update_attributes(value)
         rescue TypeError
           ''
@@ -77,6 +75,7 @@ module Classiccms
     get '/*.:extention' do
       pass unless ['css', 'js'].include? params[:extention]
       response.headers['Cache-Control'] = 'public, max-age=86400'
+      content_type params[:extention]
       show params[:splat].join
     end
   end

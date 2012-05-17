@@ -49,7 +49,7 @@ describe Classiccms do
         u = create :user
         post '/login', {}
         follow_redirect!
-        last_request.url.should == 'http://example.org/'
+        last_request.url.should == 'http://example.org/login'
       end
     end
     it 'should go to / if incorrect param is not set' do
@@ -57,7 +57,7 @@ describe Classiccms do
         u = create :user
         post '/login', {}
         follow_redirect!
-        last_request.url.should == 'http://example.org/'
+        last_request.url.should == 'http://example.org/login'
       end
     end
   end

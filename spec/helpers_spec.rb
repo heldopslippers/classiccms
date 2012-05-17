@@ -148,16 +148,13 @@ describe Classiccms do
     end
   end
   describe :add do
-    it 'should reject if model does not exist' do
-      add(:menu, 0, :name).should == nil
-    end
     it 'should reject if session user_id is not set' do
       m = Menu.create
       @routes = [m.id]
-      add(Menu, 0, :name).should == nil
+      add([Menu, 0, :name]).should == nil
     end
     it 'should return html' do
-      file 'haml', "= add Menu, 0, 'hello'" do
+      file 'haml', "= add [Menu, 0, 'hello']" do
         m = Menu.create
         user = create :user
         post '/login', :username => user.username, :password => user.password
@@ -167,17 +164,16 @@ describe Classiccms do
       end
     end
     it 'should return a valid encryption key' do
-      file 'haml', "= add Menu, 0, 'hello'" do
+      file 'haml', "= add [Menu, 0, 'hello']" do
         m = Menu.create
         user = create :user
         post '/login', :username => user.username, :password => user.password
 
         get '/'
-        encrypted = "vJtcKifYA0Ppmf/OLsbh1mHXjhM1tC1OVxKEO6JexIb5Dc7"
+        encrypted = "JMiQb770XXy0IkW1tSvoAhORd6mUwRlW0po6HeFRDgU="
         last_response.body.should match(encrypted)
       end
     end
-
   end
   describe :edit do
     it 'should reject if id does not exist' do
