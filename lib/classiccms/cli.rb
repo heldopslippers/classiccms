@@ -7,6 +7,7 @@ module Classiccms
       case arguments[0]
       when 'new'    then self.new arguments[1]
       when 'server' then self.server
+      when 's'      then self.server
       when '-v' then puts "version #{VERSION}"
       else
         puts "you are so smart! I don't know what you mean! (try using new or server)"

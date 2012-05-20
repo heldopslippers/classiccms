@@ -63,25 +63,6 @@ describe Base do
       $stdout.string.should == "version #{Classiccms::VERSION}\n"
     end
   end
-  #it "should display error message that this isn't an app" do
-  #  capture_log do
-  #    Classiccms::Cli.command ['server']
-  #    $stdout.string.should == "not an app! Try running:\nclassicCMS new [app name]\n"
-  #  end
-  #end
-  #it "should display message that server is booting" do
-  #  app_name = 'app'
-  #  #create app
-  #  { Classiccms::Cli.command ['new', app_name] }
-  #  #cd into it
-  #  Dir.chdir app_name
-  #  capture_log do
-  #    #boot
-  #    Classiccms::Cli.command ['server']
-  #    #check message
-  #    $stdout.string.should == "Going to start server...\n"
-  #  end
-  #end
   it "should test if models are included" do
     setup_app 'app' do
       discard do
