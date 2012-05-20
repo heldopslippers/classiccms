@@ -33,6 +33,12 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "sinatra-support"
   s.add_runtime_dependency "thin"
 
+  #background processing
+  s.add_runtime_dependency "resque"
+
+  #mail
+  s.add_runtime_dependency "mail"
+
   #templating
   s.add_runtime_dependency "tilt"
   s.add_runtime_dependency "haml"

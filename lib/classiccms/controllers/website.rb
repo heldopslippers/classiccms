@@ -11,6 +11,7 @@ module Classiccms
 
       index = CONFIG[:home].kind_of?(String) ? CONFIG[:home] : 'application/index'
       @routes = get_route(get_first_item)
+      @routes << nil
       show index
     end
     get '/javascripts/*.js' do
@@ -28,6 +29,7 @@ module Classiccms
 
       item = Base.find(Slug.find(params[:id]).document_id)
       @routes = get_route(item)
+      @routes << nil
       show index
     end
   end

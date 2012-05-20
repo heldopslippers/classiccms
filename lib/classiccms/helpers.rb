@@ -29,7 +29,7 @@ module Classiccms
     #renders a specific page
     def layout(section_name, position)
       id = get_parent_id(position)
-      records = Base.where(_id: id)
+      records = Base.where(:'connection.parent_id' => id)
       if records.count > 0 and records.first.connections.where(:section => section_name, :file.ne => nil).count > 0
         file_name = records.first.connections.where(:section => section_name, :file.ne => nil).first.file
         show "#{records.first._type}/#{file_name}", {}, {record: records.first}
@@ -42,8 +42,8 @@ module Classiccms
     def section(section_name, parent_id = nil)
       html = []
       parent_id = get_parent_id(parent_id)
-      Base.where(:'connections.parent'=> parent_id, :'connections.section' => section_name, :'connections.file'.ne => nil).each do |record|
-        connection = record.connections.where(:parent => parent_id, :section => section_name, :file.ne => nil).first
+      Base.where(:'connections.parent_id' => parent_id, :'connections.section' => section_name, :'connections.file'.ne => nil).each do |record|
+        connection = record.connections.where(:parent_id => parent_id, :section => section_name, :file.ne => nil).first
 
         #render html
         rendering = show "#{record._type}/#{connection.file}", {}, {record: record}
@@ -91,7 +91,7 @@ module Classiccms
     def get_parent_id(position)
       if position.kind_of? Integer
         routes = @routes.reverse
-        if routes[position] != nil
+        if routes.length > position
           return routes[position]
         elsif routes.count > 0
           return get_parent_id(position-1)

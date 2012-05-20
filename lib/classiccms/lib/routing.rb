@@ -15,7 +15,7 @@ module Classiccms
         routes << current.id
         branches = Array.new
         current.connections.each_with_index do |connection, i|
-          if connection.parent_id != nil
+          if connection.parent_id != nil and Base.where(:_id => connection.parent_id).count > 0
             branches[i] = get_route(Base.find(connection.parent_id))
           end
         end

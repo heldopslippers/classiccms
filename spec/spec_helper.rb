@@ -14,6 +14,7 @@ FactoryGirl.find_definitions
 #include sinatra end set environment
 require 'rack/test'
 require 'sinatra'
+
 set :environment, :test
 
 RSpec.configure do |config|

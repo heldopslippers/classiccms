@@ -24,7 +24,7 @@
     - if record.new?
       - record.connections.each do |connection|
         %input{:type=> 'hidden', :name=> "[#{record.class}][connections][][id]",      :value => connection.id}
-        %input{:type=> 'hidden', :name=> "[#{record.class}][connections][][parent]",  :value => connection.parent}
+        %input{:type=> 'hidden', :name=> "[#{record.class}][connections][][parent_id]",  :value => connection.parent_id}
         %input{:type=> 'hidden', :name=> "[#{record.class}][connections][][section]", :value => connection.section}
         - if connection.files == nil
           %input{:type=> 'hidden', :name=> "[#{record.class}][connections][][file]", :value => connection.section}

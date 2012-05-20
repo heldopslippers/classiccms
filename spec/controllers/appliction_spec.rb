@@ -62,14 +62,14 @@ describe Classiccms do
     end
   end
   it 'logout should destroy all session variables' do
-    with_constants :CONFIG => {:home => 'application/index10'} do
-      set_file "views/application/index10.haml", "= session[:user_id]"
+    file 'haml', "= session[:user_id]" do
       u = create :user
       post '/login', {:username => u.username, :password => u.password}
       follow_redirect!
       last_response.body.should == "#{u.id}\n"
       get '/logout'
       follow_redirect!
+
       last_response.body.should == "\n"
     end
   end

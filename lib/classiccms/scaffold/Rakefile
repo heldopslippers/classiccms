@@ -1,0 +1,9 @@
+#to run: 
+# QUEUE=* rake resque:work
+require 'classiccms'
+
+ENV['RACK_ENV'] = 'development'
+Classiccms.boot
+
+require 'resque/tasks'
+

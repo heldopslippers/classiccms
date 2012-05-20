@@ -18,7 +18,7 @@ module Classiccms
           new = eval(params['cms']).first
           record = new[0].new
 
-          record.connections << Connection.new(:parent => new[1], :section => new[2], :files => new[2..new.length])
+          record.connections << Connection.new(:parent_id => new[1], :section => new[2], :files => new[2..new.length])
           show :add_window, {}, {:record => record}
         rescue TypeError, ArgumentError
           ''

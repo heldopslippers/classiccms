@@ -11,6 +11,8 @@ require "sass"
 require "slim"
 require "coffee-script"
 require 'encryptor'
+require 'resque'
+require 'resque/server'
 
 CONFIG = {}
 module Classiccms
@@ -29,7 +31,7 @@ module Classiccms
 
     #FROM App
     #Set config.yml
-    if !defined? CONFIG or CONFIG == []
+    if !defined? CONFIG or CONFIG.empty? and ENV['RACK_ENV'] != 'test'
       value = YAML.load_file(File.join(Dir.pwd, 'config/config.yml'))[ENV['RACK_ENV']]
       const_set "CONFIG", value.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
     end
@@ -50,13 +52,25 @@ module Classiccms
     #FROM Gem
     #require mongoid
     Mongoid.load!(File.join(ROOT, 'mongoid.yml'))
-    #require File.join(File.dirname(__FILE__), 'mongoid.rb')
+
+    #from gem
+    #require resque
+    Resque.redis = YAML.load_file(File.join(ROOT, 'resque.yml'))[ENV['RACK_ENV']]
+    Resque.redis.namespace = CONFIG[:database]
 
     #require helpers
     require File.join(File.dirname(__FILE__), 'helpers.rb')
+
+    #FROM App
+    #require queue
+    Dir[File.join(Dir.pwd, 'app/queue/*.rb')].each {|file| require file }
+
     #FROM Gem
     #require controllers
     Dir[File.join(File.dirname(__FILE__), 'controllers/*.rb')].each {|file| require file }
 
+    #FROM App
+    #require controllers
+    Dir[File.join(Dir.pwd, 'app/controllers/*.rb')].each {|file| require file }
   end
 end

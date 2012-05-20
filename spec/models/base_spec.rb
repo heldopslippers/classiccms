@@ -33,4 +33,18 @@ describe 'Base' do
   it 'should have embeded connections' do
     @base.connections.should == []
   end
+  it 'should remove the slugs if the document gets destroyed' do
+    b1 = Base.create
+    Slug.create(:document_id => b1.id)
+    Slug.count.should == 1
+    b1.destroy
+
+    Slug.count.should == 0
+  end
+  it 'should should remove the connections linking to the document' do
+    b1 = Base.create
+    b2 = Base.create(:connections => [Connection.new(:parent_id => b1.id), Connection.new()])
+    b1.destroy
+    Base.find(b2.id).connections.count.should == 1
+  end
 end
