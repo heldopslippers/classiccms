@@ -60,8 +60,12 @@ class TopPanel
     @delete_button_hover()
 
   create: (url) ->
-    $j.post url, $j(@p.form).serialize(), (data) ->
-      window.location.reload()
+    $j.post url, $j(@p.form).serialize(), (data) =>
+      if data == ''
+        window.location.reload()
+      else
+        $j.each data, (index, value)=>
+          $j(@p.form).find("label[key=#{index}] p").text(value[0])
 
   destroy: (url, id) ->
     $j.post url, {id: id}, ->

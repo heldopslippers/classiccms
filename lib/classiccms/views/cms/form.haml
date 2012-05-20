@@ -6,9 +6,9 @@
     - model.fields.each do |key, info|
       - name = "[#{model}][#{key}]"
       - if !["_type", "_id", "created_at", "updated_at", "version", "deleted_at"].include? key
-        %label
+        %label{key: key}
           %a= key
-          %p
+          %p{:style => 'color: red;'}
         - case info.options[:input]
         - when 'input'
           %input{:type=> 'text', :name=> name, :value=> record[key], :class=>"textfield", :type=> "text"}
