@@ -27,10 +27,14 @@ module Classiccms
       pass unless Slug.exists?(conditions: {_id: params[:id]})
       index = CONFIG[:home].kind_of?(String) ? CONFIG[:home] : 'application/index'
 
+
       item = Base.find(Slug.find(params[:id]).document_id)
       @routes = get_route(item)
       @routes << nil
       show index
+    end
+    not_found do
+      show :'404', views: File.join(Classiccms::ROOT, 'views/cms')
     end
   end
 end

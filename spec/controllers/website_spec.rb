@@ -65,7 +65,7 @@ describe Classiccms do
   describe '/:id/?*' do
     it 'should return not found if id does not exist' do
       get '/test'
-      last_response.body.should == '<h1>Not Found</h1>'
+      last_response.status.should == 404
     end
     it 'should render the index if id is found' do
       string = "= @routes.first.to_s"
@@ -124,6 +124,14 @@ describe Classiccms do
       set_file "../public/test.png", "hello"
       get '/test.png'
       last_response.body.should == "hello\n"
+    end
+  end
+
+  describe '404' do
+    it 'should return 404 when route was not found' do
+      get '/idiot_url'
+      last_response.body.should match('error')
+      last_response.status.should == 404
     end
   end
 
