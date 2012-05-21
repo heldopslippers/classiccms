@@ -13,7 +13,7 @@
         - when 'input'
           %input{:type=> 'text', :name=> name, :value=> record[key], :class=>"textfield", :type=> "text"}
         - when 'textarea'
-          %textarea{:id => key, :name=> key}= record[key]
+          %textarea{:id => key, :name=> name}= record[key]
         - when 'dropdown'
         - when 'image'
           %a.image_select selecteer afbeelding

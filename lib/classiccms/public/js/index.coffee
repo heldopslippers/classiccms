@@ -121,8 +121,8 @@ class Editor
           { name: 'links', items : [ 'Link','Unlink','-'] },
           { name: 'tools', items : [ 'Maximize' ] }
         ],
-        filebrowserBrowseUrl : '/cms/browser/browse.php',
-        filebrowserUploadUrl : '/cms/uploader/upload.php',
+        filebrowserBrowseUrl : '/cms/browse',
+        filebrowserUploadUrl : '/cms/uploader/upload',
         filebrowserWindowWidth : '640',
         filebrowserWindowHeight : '480'
       }
