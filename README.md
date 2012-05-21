@@ -1,26 +1,22 @@
-## ClassicCMS
+## Classiccms
 
 To install:
-    gem install classicCMS
+    gem install classiccms
 
 Generate new website:
-    classicCMS new [app name]
+    classiccms new [app name]
+
+change directory:
+    cd [app name]
+
+Start server
+    classiccms server
+
+
 
 
 ## TODO
-- Write Models and specs
-  + Base
-  + Connections
-  + Slugs
   - Asset handeling
-  - Authentication
-    - Users
-    - Groups
-    - Rights
-- Create startup procedure
-- Write Controllers and specs
-  - ApplicationController
-  - CMSController
-- Create helper methods
-- Finalize Scaffold app and decide on level of spec coverage
-- Document!
+  - Create helper methods
+  - Finalize Scaffold app
+  - Document!
