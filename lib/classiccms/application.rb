@@ -13,6 +13,7 @@ require "coffee-script"
 require 'encryptor'
 require 'resque'
 require 'resque/server'
+require 'carrierwave/mongoid'
 
 CONFIG = {}
 module Classiccms

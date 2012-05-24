@@ -168,6 +168,28 @@ describe Classiccms do
     end
   end
 
+  describe 'upload' do
+    before :each do
+      @cat = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '/../../spec/assets/cat.jpg'), 'image/png')
+      @txt = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '/../../spec/assets/cat.txt'), 'image/png')
+    end
+    it 'should upload return the new image' do
+      login
+      post '/upload/image', {:Filedata => @cat}
+      last_response.body.should == ''
+    end
+    it 'should have save the image' do
+      login
+      post '/upload/image', {:Filedata => @cat}
+      image = Image.all.last
+      File.exists?("public/assets/images/#{image.id}.jpg").should == true
+    end
+    it 'should not save the image if it is not an image' do
+      login
+      post '/upload/image', {:Filedata => @txt}
+      Image.count.should == 0
+    end
+  end
 
   describe 'js' do
     it 'should render coffeescript' do

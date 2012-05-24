@@ -16,8 +16,10 @@
           %textarea{:id => key, :name=> name}= record[key]
         - when 'dropdown'
         - when 'image'
-          %a.image_select selecteer afbeelding
-          %input{:type => 'hidden', :name=> name, :value => ''}
+          - Image.all.each do |image|
+            %img{:src => image.url, :style => 'height: 30px;'}
+
+          %input{:type => 'hidden', :id => 'file_upload', :name=> 'file_upload', :value => ''}
         - when 'images'
         - else
           %label Comming soon

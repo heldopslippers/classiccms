@@ -36,6 +36,9 @@ Gem::Specification.new do |s|
   #background processing
   s.add_runtime_dependency "resque"
 
+  #file upload
+  s.add_runtime_dependency "carrierwave-mongoid"
+
   #mail
   s.add_runtime_dependency "mail"
 

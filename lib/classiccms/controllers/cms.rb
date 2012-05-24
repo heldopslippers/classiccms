@@ -71,6 +71,14 @@ module Classiccms
         end
       end
     end
+    post '/upload/image' do
+      image = Image.new
+      begin
+        image.store!(params[:Filedata])
+        image.save
+      rescue
+      end
+    end
 
     get '/*.:extention' do
       pass unless ['css', 'js'].include? params[:extention]

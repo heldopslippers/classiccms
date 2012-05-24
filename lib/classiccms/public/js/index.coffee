@@ -57,6 +57,11 @@ class TopPanel
     $j(@p.create).click => @create('/cms/save')
     $j(@p.destroy).click (event) => @destroy('/cms/destroy', $(event.target).attr('id'))
     $j(@p.image_button).click => new Popup
+    if($j('#file_upload').length != 0)
+      $j('#file_upload').uploadify(
+        'swf'      : '/cms/js/uploadify/uploadify.swf'
+        'uploader' : '/cms/upload/image'
+        )
     @delete_button_hover()
 
   create: (url) ->
