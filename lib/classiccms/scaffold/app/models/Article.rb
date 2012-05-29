@@ -1,5 +1,4 @@
 class Article < Base
-  field :name
-
+  field :name, input: 'input'
 end
 
