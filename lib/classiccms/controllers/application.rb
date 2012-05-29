@@ -4,9 +4,9 @@ require 'sinatra/support'
 
 module Classiccms
   class ApplicationController < Sinatra::Base
-    include Classiccms::Routing
+    include  Classiccms::Routing
     register Sinatra::MultiRender
-    helpers Classiccms::Helpers
+    helpers  Classiccms::Helpers
 
     set :multi_views,   [ File.join(Dir.pwd, 'views')]
     set :root, Dir.pwd
@@ -14,6 +14,7 @@ module Classiccms
     set :session_secret, '427a474a206b616e5c4f2a4f3c7d2d517e2a564e21556e24593363253e'
 
     enable :sessions
+
     before do
       @user = User.find(session[:user_id]) if session[:user_id] != nil
     end

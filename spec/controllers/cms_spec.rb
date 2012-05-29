@@ -170,19 +170,19 @@ describe Classiccms do
 
   describe 'upload' do
     before :each do
-      @cat = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '/../../spec/assets/cat.jpg'), 'image/png')
-      @txt = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '/../../spec/assets/cat.txt'), 'image/png')
+      @cat = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '/../../spec/assets/cat.jpg'), 'image/jpg')
+      @txt = Rack::Test::UploadedFile.new(File.join(File.dirname(__FILE__), '/../../spec/assets/cat.txt'), 'image/jpg')
     end
     it 'should upload return the new image' do
       login
       post '/upload/image', {:Filedata => @cat}
-      last_response.body.should == ''
+      Image.count.should == 1
     end
     it 'should have save the image' do
       login
       post '/upload/image', {:Filedata => @cat}
-      image = Image.all.last
-      File.exists?("public/assets/images/#{image.id}.jpg").should == true
+      image = Image.last
+      image.file.size.should == 34503
     end
     it 'should not save the image if it is not an image' do
       login
@@ -215,6 +215,6 @@ describe Classiccms do
   end
 
   after :all do
-    clear_tmp
+    #clear_tmp
   end
 end

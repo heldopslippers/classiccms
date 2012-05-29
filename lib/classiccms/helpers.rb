@@ -11,6 +11,13 @@ module Classiccms
       show :header, views: File.join(Classiccms::ROOT, 'views/cms')
     end
 
+    #insert the logout button
+    def logout
+      if @user != nil
+        show :logout, views: File.join(Classiccms::ROOT, 'views/cms')
+      end
+    end
+
     #generates url for a document
     def link(document, url)
       url = url.gsub(/[^a-zA-Z0-9\-\/]+/, '-').downcase

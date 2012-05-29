@@ -6,12 +6,23 @@
   -webkit-opacity: #{"." + $value}
   -moz-opacity: #{"." + $value}
 
+#iki_logout
+  :position fixed
+  :right 0px
+  :width 28px
+  :height 62px
+  :background url('/cms/images/logout.png')
+  &:hover
+    :background url('/cms/images/logout_hover.png')
 #iki
-  :position relative
+  :position fixed
+  :top 0px
+  :left 0px
   :width 100%
   :height 100%
   :color #fff
   :font-family AllerRegular
+  :overflow auto
   label, label a
     :font-family AllerBold
     :font-size 12px
@@ -22,7 +33,7 @@
     :background-color #000
     @include opacity(70)
     :position fixed
-    :z-index 1010
+    :z-index 110
 
   #logo
     :width 203px
@@ -63,7 +74,7 @@
     input.top
       :margin-top 109px
     input.bottom
-      :margin-top 56px
+      :margin-top 60px
 
     input.button
       :margin-left 200px
@@ -128,7 +139,7 @@
             :width auto
             :height 18px
             :float left
-            
+
           .right
             :background-image url('/cms/images/menu_right.png')
             :width 14px
@@ -161,6 +172,27 @@
         :padding-right 5px
         :margin-bottom 10px
       input.radiobuttons
+      .images
+        :width 684px
+        :max-height 400px
+        :overflow auto
+        .image
+          :position relative
+          :float left
+          :padding 10px
+          :cursor pointer
+          .destroy
+            :display none
+            :background url('/cms/images/image_delete.png')
+            :position absolute
+            :top 0px
+            :left 0px
+            :width 20px
+            :height 20px
+          img
+            :display inline
+        .image.selected
+          :background white
       #text_editor
         :float left
         :height 50px
@@ -373,4 +405,82 @@
     :font-size 10px
     position: relative
     float: left
-    
+ 
+#iki
+  .uploadify
+    position: relative
+    float: left
+    margin-bottom: 1em
+  
+  .uploadify-button
+    background-color: #505050
+    background-image: linear-gradient(bottom, #505050 0%, #707070 100%)
+    background-image: -o-linear-gradient(bottom, #505050 0%, #707070 100%)
+    background-image: -moz-linear-gradient(bottom, #505050 0%, #707070 100%)
+    background-image: -webkit-linear-gradient(bottom, #505050 0%, #707070 100%)
+    background-image: -ms-linear-gradient(bottom, #505050 0%, #707070 100%)
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #505050), color-stop(1, #707070))
+    background-position: center top
+    background-repeat: no-repeat
+    -webkit-border-radius: 30px
+    -moz-border-radius: 30px
+    border-radius: 30px
+    border: 2px solid #808080
+    color: #FFF
+    font: bold 12px Arial, Helvetica, sans-serif
+    text-align: center
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25)
+    width: 100%
+  
+  .uploadify:hover .uploadify-button
+    background-color: #606060
+    background-image: linear-gradient(top, #606060 0%, gray 100%)
+    background-image: -o-linear-gradient(top, #606060 0%, gray 100%)
+    background-image: -moz-linear-gradient(top, #606060 0%, gray 100%)
+    background-image: -webkit-linear-gradient(top, #606060 0%, gray 100%)
+    background-image: -ms-linear-gradient(top, #606060 0%, gray 100%)
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #606060), color-stop(1, gray))
+    background-position: center bottom
+  
+  .uploadify-button.disabled
+    background-color: #D0D0D0
+    color: #808080
+  
+  .uploadify-queue
+    margin-bottom: 1em
+    position: fixed
+    top: 0px
+    right: 0px
+  
+  .uploadify-queue-item
+    @include opacity(70)
+    background: #000000
+    color: white
+    border: 1px solid white
+    -webkit-border-radius: 3px
+    -moz-border-radius: 3px
+    border-radius: 3px
+    font: 11px Verdana, Geneva, sans-serif
+    margin-top: 5px
+    max-width: 350px
+    padding: 10px
+  
+  .uploadify-error
+    background-color: #FDE5DD !important
+  
+  .uploadify-queue-item
+    .cancel
+      display: none
+    &.completed
+      background-color: #E5E5E5
+  
+  .uploadify-progress
+    background-color: #E5E5E5
+    margin-top: 10px
+    width: 100%
+  
+  .uploadify-progress-bar
+    background-color: #0099FF
+    height: 3px
+    width: 1px
+  

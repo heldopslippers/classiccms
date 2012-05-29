@@ -1,5 +1,16 @@
 require 'spec_helper'
-describe User do
+require 'classiccms/cli'
+describe :User do
+  def app
+    Classiccms.boot
+    Classiccms::CMSController
+  end
+  before :all do
+    clear_tmp
+    discard { Classiccms::Cli.command ['new', 'app'] }
+    Dir.chdir 'app'
+    app
+  end
   before :each do
     @user = build :user
   end

@@ -13,12 +13,19 @@ require "coffee-script"
 require 'encryptor'
 require 'resque'
 require 'resque/server'
-require 'carrierwave/mongoid'
+require 'dragonfly'
+
+$app = Dragonfly[:image]
+$app.define_macro_on_include(Mongoid::Document, :image_accessor)
+$app.configure_with(:imagemagick)
 
 CONFIG = {}
 module Classiccms
   ROOT = File.dirname(__FILE__)
   def self.boot
+    #registrer cms special types
+    require File.join(File.dirname(__FILE__), 'custom.rb')
+
     #In order to get css and js files to "render"
     Tilt.register Tilt::ERBTemplate, 'css'
     Tilt.register Tilt::ERBTemplate, 'js'
@@ -53,6 +60,14 @@ module Classiccms
     #FROM Gem
     #require mongoid
     Mongoid.load!(File.join(ROOT, 'mongoid.yml'))
+
+
+    $app.configure do |d|
+      d.url_format = '/assets/:job'
+    end
+    $app.datastore.configure do |d|
+      d.root_path = File.join(Dir.pwd, 'assets')
+    end
 
     #from gem
     #require resque

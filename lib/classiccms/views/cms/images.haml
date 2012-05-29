@@ -1,0 +1,5 @@
+.images
+  - Image.all.each do |image|
+    .image{:class => '', :id => image.id}
+      .destroy
+      %img{:src => image.file.process(:thumb, '113x113#').url, :url => image.file.url}

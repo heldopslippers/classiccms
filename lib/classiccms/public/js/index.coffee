@@ -33,6 +33,55 @@ class Sort
         $j.post '/cms/sort', {section: section, order: order}
     }
 
+class Image
+  constructor: (input) ->
+    @input = input
+    @p =
+      images:   '#iki #edit_bg .images'
+      image:    '#iki #edit_bg .images .image img'
+      destroy:  '#iki #edit_bg .images .image .destroy'
+      button:   '#iki #edit_bg #file_upload'
+    @listen()
+
+  listen: ->
+    $j('#edit_bg').slideUp()
+    $j.get '/cms/images', (data) =>
+      @form = $j('#edit_bg')
+      $j('#edit_bg').after(data)
+      @set_upload_button()
+      $j('#' + @input.val()).addClass('selected')
+      @select()
+      @destroy()
+
+  destroy: () ->
+    $j(@p.images + ' .image').live 'mouseover mouseout', (event) =>
+      if (event.type == 'mouseover')
+        $j(event.currentTarget).find('.destroy').show()
+      else
+        $j(event.currentTarget).find('.destroy').hide()
+    $j(@p.destroy).click (event) =>
+      id = $j(event.currentTarget).parent().attr('id')
+      $j('.images').find('#' + id).hide()
+      $j.post '/cms/image/destroy', {id: id}
+
+  select: () ->
+    $j(@p.image).click (event) =>
+      $j(@p.image).parent().removeClass('selected')
+      $j(event.currentTarget).parent().addClass('selected')
+      $j(@input).val($j(event.currentTarget).parent().attr('id'))
+      $j('#edit_bg.popup').slideUp()
+      @form.slideDown()
+
+  set_upload_button: ->
+    if($j('#file_upload').length != 0)
+      $j('#file_upload').uploadify
+        'swf'      : '/cms/js/uploadify/uploadify.swf'
+        'uploader' : '/cms/upload/image'
+        'onUploadSuccess' : (file, data, response) =>
+          $j(data).replaceAll(@p.images)
+          @select()
+          @destroy()
+
 
 class TopPanel
   constructor: ->
@@ -47,7 +96,7 @@ class TopPanel
       create:        '#iki #edit_box .save'
       destroy:       '#iki #edit_box #edit_bottom_nav .delete'
       destroy_label: '#iki .delete_item'
-      image_button:  '#iki .image_select'
+      image_select:  '#iki .image_select'
 
     @listen()
     @show()
@@ -55,13 +104,8 @@ class TopPanel
   listen: ->
     $j(@p.cancel).click => @hide()
     $j(@p.create).click => @create('/cms/save')
-    $j(@p.destroy).click (event) => @destroy('/cms/destroy', $(event.target).attr('id'))
-    $j(@p.image_button).click => new Popup
-    if($j('#file_upload').length != 0)
-      $j('#file_upload').uploadify(
-        'swf'      : '/cms/js/uploadify/uploadify.swf'
-        'uploader' : '/cms/upload/image'
-        )
+    $j(@p.destroy).click (event) => @destroy('/cms/destroy', $j(event.target).attr('id'))
+    $j(@p.image_select).click => new Image($j(event.target).next())
     @delete_button_hover()
 
   create: (url) ->
@@ -109,6 +153,7 @@ class TopPanel
         width: '86px'
         fontSize: '0px'
       }, 500
+
 class Editor
   constructor: ->
     @p =
@@ -126,8 +171,7 @@ class Editor
           { name: 'links', items : [ 'Link','Unlink','-'] },
           { name: 'tools', items : [ 'Maximize' ] }
         ],
-        filebrowserBrowseUrl : '/cms/browse',
-        filebrowserUploadUrl : '/cms/uploader/upload',
+        filebrowserBrowseUrl : '/cms/ckeditor/images',
         filebrowserWindowWidth : '640',
         filebrowserWindowHeight : '480'
       }
@@ -148,108 +192,7 @@ class Editor
   remove: ->
     if $j(@p.textarea).length != 0
       $j(@p.textarea).ckeditorGet().destroy()
-class Popup
-  constructor: ->
-    @p =
-      base:          '#iki'
-      logo:          '#iki #logo'
-      background:    '#iki .background'
-      edit_box:      '#iki #edit_box'
-    @load('/cms/image_window')
 
-  load: (url) ->
-    $j.get '/cms/image_window', (data) =>
-      $j('body').prepend data
-      @show()
-      new Directory
-
-  show: ->
-    $j(@p.logo).fadeIn 400
-    $j(@p.background).fadeIn 400
-    $j(@p.edit_box).animate { marginTop: '0px' }, 500
-
-  hide: ->
-    $j(@p.logo).fadeOut 400
-    $j(@p.background).fadeOut 400
-    $j(@p.edit_box).animate { marginTop: '-640px' }, 500, =>
-class Directory
-  constructor: ->
-    @p =
-      base: '#iki.image_window'
-      directories: '#iki.image_window ul li.map_big a'
-      add: '#iki.image_window .add'
-
-    @images = new Image
-    @listen()
-
-  listen: ->
-    $j(@p.directories).click (event) => @select(event.target)
-    $j(@p.add).click (event) => @add(event.target)
-
-  select: (item) ->
-    ul = $j(item).closest('li').children('ul')
-    id = $j(item).closest('li').attr('id')
-    $j(@p.directories).removeClass('active')
-    $j(item).addClass('active')
-    $j(ul).slideToggle()
-    @images.load(id)
-
-  add: (item) ->
-    $j.post '/cms/add_directory', {
-      name: $j(item).siblings('input[name=name]').val(),
-      parent: $j(item).siblings('input[name=parent]').val() }, (data) =>
-        $j(@p.base).replaceWith data
-        new Directory
-class Image
-  constructor: ->
-    @p =
-      images: '.images_wrapper .files'
-      image: '#iki.image_window img.images'
-      directory_active: '#iki.image_window ul li a.active'
-      button: '#file_upload'
-    if @setup_upload()
-      @show_button 'none'
-    @listen()
-
-  listen: ->
-    $j(@p.image).live 'click', (item) => @single_select item.target
-
-  setup_upload: ->
-    config = {
-      'swf'         : '/cms/uploadify.swf'
-      'uploader'    : '/cms/add_file'
-      'cancelImage' : '/cms/images/cancel.png'
-      'multi'       : true
-      'auto'        : true
-      'postData'    : {id: 'none'}
-      'onQueueComplete' : (stats) => @load($j(@p).first().closest('li').attr('id'))
-    }
-    $j(@p.button).uploadify config
-
-  load: (directory) ->
-    @show_button directory
-
-    $j(@p.images).fadeOut()
-    $j.get "/cms/images/#{directory}", (data) =>
-      $j(@p.images).replaceWith data
-      $j(@p.images).fadeIn()
-
-  show_button: (directory) ->
-    $j(@p.button).show()
-    $j(@p.button).uploadifySettings 'postData', {id: directory}
-
-  single_select: (target) ->
-    if $j(target).hasClass 'selected'
-      $j(@p.image).removeClass 'selected'
-    else
-      $j(@p.image).removeClass 'selected'
-      $j(target).addClass 'selected'
-  multiple_select: (target) ->
-    if $j(target).hasClass 'selected'
-      $j('#iki.image_window images_wrapper input[value=]')
-    $j(target).toggleClass 'selected'
-    $j.each $('#iki.image_window images_wrapper input[type=hidden]'), (object) ->
-      alert object.attr('value')
 
 $j ->
   new Cms

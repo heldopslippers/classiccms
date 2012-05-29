@@ -1,0 +1,23 @@
+!!! Strict
+%html
+  %head
+    %meta{:'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
+    %title 
+
+    %link{:rel=>'stylesheet', :href=>'/cms/css/reset.css', :type=> 'text/css'}
+    %link{:rel=>'stylesheet', :href=>'/cms/css/fonts.css', :type=> 'text/css'}
+    %link{:rel=>'stylesheet', :href=>'/cms/css/icons.css', :type=> 'text/css'}
+    %link{:rel=>'stylesheet', :href=>'/cms/css/popup.css', :type=> 'text/css'}
+    %link{:rel=>'stylesheet', :href=>'/cms/css/scrollbar.css', :type=> 'text/css'}
+    %link{:rel=>'stylesheet', :href=>'/cms/css/style.css', :type=> 'text/css'}
+    %link{:rel=>'stylesheet', :href=>'/cms/css/images.css', :type=> 'text/css'}
+
+    %script{:type=>'text/javascript', :src=>'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'}
+    %script{:type=>'text/javascript', :src=>'/cms/js/uploadify/jquery.uploadify-3.1.min.js'}
+    %script{:type=>'text/javascript', :src=>'/cms/js/images.js'}
+  %body
+    #iki
+      %input{:type => 'hidden', :name => 'return', :value => params[:CKEditorFuncNum]}
+      = show :browse
+
+

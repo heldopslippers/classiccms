@@ -33,6 +33,8 @@ module Classiccms
       @routes << nil
       show index
     end
+
+    use Dragonfly::Middleware, :image
     not_found do
       show :'404', views: File.join(Classiccms::ROOT, 'views/cms')
     end

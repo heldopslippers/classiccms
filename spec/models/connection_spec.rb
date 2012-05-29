@@ -1,5 +1,17 @@
 require 'spec_helper'
-describe Connection do
+require 'classiccms/cli'
+
+describe :Connection do
+  def app
+    Classiccms.boot
+    Classiccms::CMSController
+  end
+  before :all do
+    clear_tmp
+    discard { Classiccms::Cli.command ['new', 'app'] }
+    Dir.chdir 'app'
+    app
+  end
   before :each do
     @connection = Connection.new
     @connection.parent_id = Base.create.id

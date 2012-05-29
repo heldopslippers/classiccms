@@ -1,6 +1,9 @@
-require 'classiccms/models/uploader.rb'
 class Image
   include Mongoid::Document
 
-  mount_uploader :image, Uploader
+  field :file_uid
+  field :file_name
+
+  image_accessor :file
+  validates_property :format, :of => :file, :in => [:jpg, :jpeg, :png, :gif]
 end

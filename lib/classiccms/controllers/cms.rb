@@ -73,11 +73,20 @@ module Classiccms
     end
     post '/upload/image' do
       image = Image.new
-      begin
-        image.store!(params[:Filedata])
-        image.save
-      rescue
-      end
+      image.file = params[:Filedata][:tempfile].read
+      image.file.name = params[:Filedata][:filename]
+      image.save
+      show :images
+    end
+    get '/images' do
+      show :browse
+    end
+    post '/image/destroy' do
+      image = Image.find(params[:id])
+      image.destroy
+    end
+    get '/ckeditor/images' do
+      show :ckeditor
     end
 
     get '/*.:extention' do

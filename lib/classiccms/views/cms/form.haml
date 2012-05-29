@@ -4,25 +4,25 @@
     - if !record.new?
       %input{:type=>'hidden', :name=> "[#{model}][id]", :value=> record.id}
     - model.fields.each do |key, info|
-      - name = "[#{model}][#{key}]"
-      - if !["_type", "_id", "created_at", "updated_at", "version", "deleted_at"].include? key
-        %label{key: key}
-          %a= key
-          %p{:style => 'color: red;'}
-        - case info.options[:input]
-        - when 'input'
-          %input{:type=> 'text', :name=> name, :value=> record[key], :class=>"textfield", :type=> "text"}
-        - when 'textarea'
-          %textarea{:id => key, :name=> name}= record[key]
-        - when 'dropdown'
-        - when 'image'
-          - Image.all.each do |image|
-            %img{:src => image.url, :style => 'height: 30px;'}
+      .item
+        - name = "[#{model}][#{key}]"
+        - if !["_type", "_id", "created_at", "updated_at", "version", "deleted_at"].include? key
+          %label{key: key}
+            %a= key
+            %p{:style => 'color: red;'}
+          - case info.options[:input]
+          - when 'input'
+            %input{:type=> 'text', :name=> name, :value=> record[key], :class=>"textfield", :type=> "text"}
+          - when 'textarea'
+            %textarea{:id => key, :name=> name}= record[key]
+          - when 'dropdown'
+          - when 'image'
+            %p.image_select Selecteer image
+            %input{:type => 'hidden', :id => 'file_select', :name=> name, :value => record[key]}
 
-          %input{:type => 'hidden', :id => 'file_upload', :name=> 'file_upload', :value => ''}
-        - when 'images'
-        - else
-          %label Comming soon
+          - when 'images'
+          - else
+            %label Comming soon
     - if record.new?
       - record.connections.each do |connection|
         %input{:type=> 'hidden', :name=> "[#{record.class}][connections][][id]",      :value => connection.id}

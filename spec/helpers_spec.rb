@@ -36,6 +36,21 @@ describe Classiccms do
       end
     end
   end
+  it 'should render the logout button when logedin' do
+    with_constants :CONFIG => {:home => 'application/logout'} do
+      set_file 'views/application/logout.haml', "= logout"
+      login
+      get '/'
+      last_response.body.should match('/logout')
+    end
+  end
+  it 'should not render the logout button' do
+      with_constants :CONFIG => {:home => 'application/logout'} do
+        set_file 'views/application/logout.haml', "= logout"
+        get '/'
+        last_response.body.should == "\n"
+      end
+  end
   describe 'slug helper' do
     it 'should send back a slug url with 0' do
       link(Menu.create, 'test').should == '/0/test'

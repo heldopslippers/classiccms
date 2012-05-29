@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "resque"
 
   #file upload
-  s.add_runtime_dependency "carrierwave-mongoid"
+  s.add_runtime_dependency "dragonfly"
 
   #mail
   s.add_runtime_dependency "mail"

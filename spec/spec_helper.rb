@@ -4,7 +4,7 @@ require 'bundler/setup'
 #set environment to test
 ENV['RACK_ENV'] = 'test'
 
-require 'classicCMS'
+require 'classiccms/application'
 require 'methods'
 
 #factory girl

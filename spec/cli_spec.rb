@@ -3,7 +3,7 @@ require 'stringio'
 require 'classiccms/cli'
 require 'classiccms/application'
 
-describe Base do
+describe :Base do
   before :each do
     clear_tmp
   end
