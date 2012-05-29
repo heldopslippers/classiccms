@@ -14,9 +14,5 @@ Start server
 
 
 
-
 ## TODO
-  - Asset handeling
-  - Create helper methods
-  - Finalize Scaffold app
   - Document!
