@@ -10,14 +10,13 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: <%= CONFIG[:database] %>_production
+  database: $_production
 
 test:
   <<: *defaults
-  database: <%= CONFIG[:database] %>_test
+  database: $_test
 
 # set these environment variables on your prod server
 production:
   <<: *defaults
-  database: <%= CONFIG[:database] %>
-
+  database: $

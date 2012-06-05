@@ -32,6 +32,14 @@ describe :Base do
       $stdout.string.should == "#{app_name} created!\n"
     end
   end
+  it 'should change the mongoid databases' do
+    capture_log do
+      app_name = 'mongoidTestApp'
+      Classiccms::Cli.command ['new', app_name]
+      File.open(File.join(app_name, 'config/mongoid.yml')).read.include?(app_name).should == true
+    end
+  end
+
   it "should create a directory with app name" do
     capture_log do
       app_name = 'app'

@@ -23,6 +23,12 @@ module Classiccms
         #copy scaffold
         FileUtils.cp_r File.join(File.dirname(__FILE__), "scaffold"),  Dir.pwd + "/#{app_name}"
 
+        #replace database
+        mongoid = File.read(File.join(Dir.pwd, app_name, 'config/mongoid.yml')).gsub('$', app_name)
+        File.open(File.join(Dir.pwd, app_name, 'config/mongoid.yml'), 'w') do |f|
+          f.puts mongoid
+        end
+
         puts "#{app_name} created!"
       end
     end

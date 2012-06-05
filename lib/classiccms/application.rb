@@ -57,10 +57,9 @@ module Classiccms
     #require models
     Dir[File.join(Dir.pwd, 'app/models/*.rb')].each {|file| require file }
 
-    #FROM Gem
+    #FROM App
     #require mongoid
-    Mongoid.load!(File.join(ROOT, 'mongoid.yml'))
-
+    Mongoid.load!(File.join(Dir.pwd, 'config/mongoid.yml'))
 
     $app.configure do |d|
       d.url_format = '/assets/:job'
