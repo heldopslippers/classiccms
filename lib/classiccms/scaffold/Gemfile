@@ -1,2 +1,6 @@
 source :rubygems
 gem 'classiccms'
+
+group :test do
+  gem 'rspec'
+end
