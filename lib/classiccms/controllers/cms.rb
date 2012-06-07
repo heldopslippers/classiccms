@@ -48,7 +48,7 @@ module Classiccms
     end
     post '/destroy' do
       items = Base.where(_id: params[:id])
-      items.first.delete if items.count > 0
+      items.first.destroy if items.count > 0
     end
     post '/sort' do
       section = params[:section]
