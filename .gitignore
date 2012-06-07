@@ -7,3 +7,4 @@ pkg/*
 .rspec
 tmp
 .sass-cache
+vendor/**/*
