@@ -8,7 +8,9 @@ module Classiccms
 
     #insert the header for CMS to work
     def cms
-      show :header, views: File.join(Classiccms::ROOT, 'views/cms')
+      if defined? @user
+        show :header, views: File.join(Classiccms::ROOT, 'views/cms')
+      end
     end
 
     #insert the logout button
