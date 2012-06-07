@@ -10,7 +10,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: $_production
+  database: $_development
 
 test:
   <<: *defaults
