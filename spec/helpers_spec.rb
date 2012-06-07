@@ -28,8 +28,16 @@ describe Classiccms do
     end
   end
   describe 'cms helper' do
-    it 'should render cms' do
+    it 'should not render cms if not logged in' do
       with_constants :CONFIG => {:home => 'application/cms'} do
+        set_file 'views/application/cms.haml', "= cms"
+        get '/'
+        last_response.body.should_not match('script')
+      end
+    end
+    it 'should render cms if logged in' do
+      with_constants :CONFIG => {:home => 'application/cms'} do
+        login
         set_file 'views/application/cms.haml', "= cms"
         get '/'
         last_response.body.should match('script')
