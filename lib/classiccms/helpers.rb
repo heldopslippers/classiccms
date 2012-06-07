@@ -41,7 +41,7 @@ module Classiccms
         file_name = records.first.connections.where(:section => section_name, :file.ne => nil).first.file
         show "#{records.first._type}/#{file_name}", {}, {record: records.first}
       else
-        ''
+        '404'
       end
     end
 

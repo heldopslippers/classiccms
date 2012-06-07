@@ -15,11 +15,20 @@ module Classiccms
       if params['cms'] != nil and params['cms'].length > 2
         begin
           params['cms'] = Base64.decode64(params['cms']).decrypt
-          new = eval(params['cms']).first
-          record = new[0].new
-
-          record.connections << Connection.new(:parent_id => new[1], :section => new[2], :files => new[2..new.length])
-          show :add_window, {}, {:record => record}
+          new_params= eval(params['cms'])
+          records = []
+          new_params.each do |new|
+            record = new[0].new
+            records.each do |i|
+              if i.kind_of? new[0]
+                record = i
+                records.delete(i)
+              end
+            end
+            record.connections << Connection.new(:parent_id => new[1], :section => new[2], :files => new[2..new.length])
+            records << record
+          end
+          show :add_window, {}, {:records => records}
         rescue TypeError, ArgumentError
           ''
         end

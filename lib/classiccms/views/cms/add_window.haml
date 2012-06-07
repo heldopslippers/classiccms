@@ -2,7 +2,8 @@
   .background
   #logo
   #edit_box
-    /- models.each do |model|
+    /- records.each do |record|
+    - record = records.first if defined? records
     = show :form, {}, {:record => record}
     #edit_bottom
     #edit_bottom_nav

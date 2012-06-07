@@ -71,6 +71,25 @@ describe Classiccms do
       post '/add', {:cms => string}
       last_response.body.should match("action='/cms/create'")
     end
+    it 'should render multiple connections' do
+      login
+      m = Menu.new
+      string = Base64.encode64([[Menu, 0, 'first'], [Menu, 0, 'second']].to_s.encrypt)
+      post '/add', {:cms => string}
+      last_response.body.should match("value='first'")
+      last_response.body.should match("value='second'")
+    end
+    it 'should render only the first model' do
+      #create model
+      set_file "models/article.rb", "class Article < Base; field :name, input: 'input'; validates_length_of :name, maximum: 10; end"
+      require_models
+
+      login
+      string = Base64.encode64([[Menu, 0, 'first'], [Article, 0, 'second']].to_s.encrypt)
+      post '/add', {:cms => string}
+      last_response.body.should match("value='first'")
+      last_response.body.should_not match("value='second'")
+    end
   end
 
   describe 'edit' do
@@ -215,6 +234,6 @@ describe Classiccms do
   end
 
   after :all do
-    #clear_tmp
+    clear_tmp
   end
 end
