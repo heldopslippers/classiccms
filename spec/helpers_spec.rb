@@ -77,20 +77,20 @@ describe Classiccms do
   describe 'layout helper' do
     it 'should return 404 when section does not exist' do
       @routes = [Menu.create.id]
-      layout('menu', 0).should == '404'
+      layout('menu', 1).should == '404'
     end
     it 'should return when there are no records' do
       @routes = []
-      layout('menu', 0).should == '404'
+      layout('menu', 1).should == '404'
     end
     it 'should return 404 when section exist but no file name is given' do
       m = Menu.create(connections: [Connection.new(section: 'menu')])
       @routes = [m.id]
-      layout('menu', 0).should == '404'
+      layout('menu', 1).should == '404'
     end
-    it 'should return 404 when file does not exist' do
+    it 'should return the rendered file' do
       with_constants :CONFIG => {home: 'application/index4', model: 'Menu', section: 'menu'} do
-        set_file "views/application/index4.haml", "= layout 'menu', 0"
+        set_file "views/application/index4.haml", "= layout 'menu', 1"
         create_dir 'views/Menu'
         set_file "views/Menu/index.haml", "%h1 menu"
 
@@ -102,7 +102,7 @@ describe Classiccms do
     end
     it 'should also pass the current record' do
       with_constants :CONFIG => {home: 'application/index4', model: 'Menu', section: 'menu'} do
-        set_file "views/application/index4.haml", "= layout 'menu', 0"
+        set_file "views/application/index4.haml", "= layout 'menu', 1"
         create_dir 'views/menu'
         set_file "views/menu/record.haml", "%h1= record.id"
 
