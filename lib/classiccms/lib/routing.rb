@@ -21,7 +21,7 @@ module Classiccms
         end
         new = Array.new
         branches.each do |branch|
-          if new.count == 0 or new.count > branch.count
+          if branch != nil and (new.count == 0 or new.count > branches.count)
             new = branch
           end
         end

@@ -71,5 +71,9 @@ describe Classiccms do
       m2 = Menu.create connections: [Connection.new(parent_id: m1.id)]
       get_route(m2).should  == [m2.id, m1.id]
     end
+    it 'should return something' do
+      m1 = Menu.create connections: [Connection.new(parent_id: nil)]
+      get_route(m1).should  == [m1.id]
+    end
   end
 end
