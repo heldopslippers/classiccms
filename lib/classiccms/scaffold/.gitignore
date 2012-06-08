@@ -2,3 +2,4 @@ vendor/**/*
 .bin/*
 .sass-cache/**
 .bundle/*
+assets/**/*
