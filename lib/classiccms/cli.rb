@@ -29,6 +29,12 @@ module Classiccms
           f.puts mongoid
         end
 
+        #replace database name
+        redis = File.read(File.join(Dir.pwd, app_name, 'config/redis.yml')).gsub('$', app_name)
+        File.open(File.join(Dir.pwd, app_name, 'config/redis.yml'), 'w') do |f|
+          f.puts redis
+        end
+
         puts "#{app_name} created!"
       end
     end
