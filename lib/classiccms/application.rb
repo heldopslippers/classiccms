@@ -71,8 +71,8 @@ module Classiccms
     #from gem
     #require resque
     redis_conf = YAML.load_file(File.join(Dir.pwd, 'config/redis.yml'))[ENV['RACK_ENV']]
-    Resque.redis = redis_conf
-    Resque.redis.namespace = redis_conf[:database]
+    Resque.redis = redis_conf['host']
+    Resque.redis.namespace = redis_conf['database']
 
     #require helpers
     require File.join(File.dirname(__FILE__), 'helpers.rb')

@@ -1,9 +1,9 @@
 development:
-  localhost: 6379
+  host: localhost:6379
   database: $_development
 test:
-  localhost: 6379
+  host: localhost:6379
   database: $_test
-production: 
-  localhost: 6379
+production:
+  host: localhost:6379
   database: $
