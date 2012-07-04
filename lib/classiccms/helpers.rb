@@ -55,7 +55,7 @@ module Classiccms
         connection = record.connections.where(:parent_id => parent_id, :section => section_name, :file.ne => nil).first
 
         #render html
-        rendering = show "#{record._type}/#{connection.file}", {}, {record: record}
+        rendering = show connection.file, {views: ["app/views/#{record._type}", "app/views/#{record._type.downcase}"]}, {record: record}
 
         html.insert(connection.order_id, rendering)
       end

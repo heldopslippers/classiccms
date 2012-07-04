@@ -144,6 +144,18 @@ describe Classiccms do
         last_response.body.should == "<h1>menu</h1>\n"
       end
     end
+    it 'should return the rendered file, even if the directory does not match exactly' do
+      with_constants :CONFIG => {home: 'application/index6'} do
+        set_file "views/application/index6.haml", "= section 'menu', 0"
+        create_dir 'views/Menu'
+        set_file "views/Menu/section.haml", "%h1 menu"
+
+        m = Menu.create connections: [Connection.new(section: 'menu', file: 'section')]
+
+        get '/'
+        last_response.body.should == "<h1>menu</h1>\n"
+      end
+    end
     it 'should add local variable record' do
       with_constants :CONFIG => {home: 'application/index5'} do
         set_file "views/application/index5.haml", "= section 'menu', 0"

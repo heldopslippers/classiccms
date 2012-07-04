@@ -63,6 +63,8 @@ module Classiccms
     end
 
     post '/save' do
+      content_type :json
+      errors = []
       params.each do |key, value|
         begin
           if value['id'] != nil
@@ -72,13 +74,13 @@ module Classiccms
           end
           record.update_attributes(value)
         rescue TypeError
-          ''
         end
         if !record.save
-          content_type :json
-          return record.errors.messages.to_json
+          errors << record.errors.messages.to_json
+        else
         end
       end
+      return errors
     end
     post '/upload/image' do
       image = Image.new
