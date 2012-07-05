@@ -41,7 +41,7 @@ module Classiccms
       records = Base.where(:_id => id)
       if records.count > 0 and records.first.connections.where(:section => section_name, :file.ne => nil).count > 0
         file_name = records.first.connections.where(:section => section_name, :file.ne => nil).first.file
-        show "#{records.first._type}/#{file_name}", {}, {record: records.first}
+        show file_name, {views: ["app/views/#{records.first._type}", "app/views/#{records.first._type.downcase}"]}, {record: records.first}
       else
         '404'
       end
