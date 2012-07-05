@@ -110,7 +110,6 @@ class TopPanel
 
   create: (url) ->
     $j.post url, $j(@p.form).serialize(), (data) =>
-      alert data
       if data == null
         window.location.reload()
       else

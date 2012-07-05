@@ -103,6 +103,7 @@ describe Classiccms do
         set_file "views/Menu/index.haml", "%h1 menu"
 
         m = Menu.create connections: [Connection.new(section: 'menu', file: 'index')]
+        m.connections
 
         get '/'
         last_response.body.should == "<h1>menu</h1>\n"
