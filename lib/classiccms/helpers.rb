@@ -60,12 +60,21 @@ module Classiccms
 
         #render html
         rendering = show connection.file, {views: ["app/views/#{record._type}", "app/views/#{record._type.downcase}"]}, {record: record}
-
-        html[connection.order_id] = rendering
+        if html[connection.order_id] == nil
+          html[connection.order_id] = rendering
+        else
+          html[get_unique_number(html, connection.order_id)] = rendering
+        end
       end
       Hash[html.sort].map{|k,v| v}.join
     end
-
+    def get_unique_number(hash, number)
+      if hash[number] == nil
+        return number
+      else
+        return get_unique_number(hash, number+1)
+      end
+    end
     #returns the html for add button
     def add(*items)
       items.each do |item|
