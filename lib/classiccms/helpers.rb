@@ -52,7 +52,7 @@ module Classiccms
 
     #renders all child pages of the given position (id)
     def section(section_name, parent_id = nil)
-      html = []
+      html = {}
       parent_id = get_parent_id(parent_id)
 
       Base.where(:'connections.parent_id' => parent_id, :'connections.section' => section_name, :'connections.file'.ne => nil).each do |record|
@@ -61,9 +61,9 @@ module Classiccms
         #render html
         rendering = show connection.file, {views: ["app/views/#{record._type}", "app/views/#{record._type.downcase}"]}, {record: record}
 
-        html.insert(connection.order_id, rendering)
+        html[connection.order_id] = rendering
       end
-      html.join
+      Hash[html.sort].map{|k,v| v}.join
     end
 
     #returns the html for add button
