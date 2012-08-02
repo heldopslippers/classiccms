@@ -16,14 +16,13 @@ describe Classiccms do
 
     set_file "queue/test.rb", %Q(
       class Test
-        @queue = :mail
-        def self.perform
+        include Celluloid
+        def perform
           p 'hello world'
         end
       end
     )
-    app
-    Resque.inline = true
+    app 
   end
 
   it 'should have Mail class' do
@@ -32,7 +31,9 @@ describe Classiccms do
   end
   it 'should be able to run background task' do
     capture_log do
-      Resque.enqueue Test
+      t = Test.new 
+      t.perform!
+      sleep 1
       $stdout.string.should == "\"hello world\"\n"
     end
   end
@@ -42,7 +43,6 @@ describe Classiccms do
   it 'should have an example queue' do
     File.exists?("#{Classiccms::ROOT}/scaffold/app/queue/mail.rb").should == true
   end
-
 
   after :all do
     clear_tmp

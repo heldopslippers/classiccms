@@ -1,8 +1,8 @@
-#To use: Resque.queue(Mail, variable, variable)
+#To use: use {method}! to perform asynchronously
 #
 #class Mail
-#  @queue = :mail
-#  def self.perform
+#  include Celluloid
+#  def send
 #    p 'hello world'
 #    Article.create
 #    puts 'hello world'

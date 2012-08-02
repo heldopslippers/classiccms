@@ -35,7 +35,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "thin"
 
   #background processing
-  s.add_runtime_dependency "resque"
+  s.add_runtime_dependency "celluloid", "~> 0.11.1"
 
   #file upload
   s.add_runtime_dependency "dragonfly"

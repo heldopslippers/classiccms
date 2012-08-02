@@ -6,4 +6,8 @@ require 'bundler'
 Bundler.require
 Classiccms.boot
 
-require 'resque/tasks'
+#task :cron do
+#  Plan.feed
+#  puts Plan.all.count
+#  puts "done."
+#end

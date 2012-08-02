@@ -1,9 +1,0 @@
-development:
-  host: localhost:6379
-  database: $_development
-test:
-  host: localhost:6379
-  database: $_test
-production:
-  host: localhost:6379
-  database: $

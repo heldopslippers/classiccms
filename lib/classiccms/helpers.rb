@@ -19,6 +19,9 @@ module Classiccms
         show :logout, views: File.join(Classiccms::ROOT, 'views/cms')
       end
     end
+    def partial(file_name)
+      show :"#{file_name}", {views: ['app/views']}
+    end
 
     #generates url for a document
     def link(document, url)
@@ -51,6 +54,7 @@ module Classiccms
     def section(section_name, parent_id = nil)
       html = []
       parent_id = get_parent_id(parent_id)
+
       Base.where(:'connections.parent_id' => parent_id, :'connections.section' => section_name, :'connections.file'.ne => nil).each do |record|
         connection = record.connections.where(:parent_id => parent_id, :section => section_name, :file.ne => nil).first
 

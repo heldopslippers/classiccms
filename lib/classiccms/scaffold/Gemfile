@@ -1,5 +1,5 @@
 source :rubygems
-gem 'classiccms', :require => 'classiccms/application'
+gem 'classiccms', '~>VERSION', :require => 'classiccms/application'
 
 group :test do
   gem 'rspec'

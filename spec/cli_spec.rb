@@ -86,7 +86,13 @@ describe :Base do
       $stdout.string.should == "you are so smart! I don't know what you mean! (try using new or server)\n"
     end
   end
-
+  it 'should set the right version in the gemfile' do 
+    capture_log do
+      app_name = 'test'
+      Classiccms::Cli.command ['new', app_name]
+      File.open(File.join(app_name, 'Gemfile')).read.include?(Classiccms::VERSION).should == true
+    end
+  end
   after :all do
     clear_tmp
   end
