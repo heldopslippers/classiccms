@@ -16,7 +16,11 @@ module Classiccms
     enable :sessions
 
     before do
-      @user = User.find(session[:user_id]) if session[:user_id] != nil
+      if User.where(:_id => session[:user_id]).count > 0
+        @user = User.find(session[:user_id]) if session[:user_id] != nil
+      else
+        session[:user_id] = nil
+      end
     end
 
     get '/login' do
