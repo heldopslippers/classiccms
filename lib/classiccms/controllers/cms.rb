@@ -25,7 +25,9 @@ module Classiccms
                 records.delete(i)
               end
             end
-            record.connections << Connection.new(:parent_id => new[1], :section => new[2], :files => new[2..new.length])
+            files = new.length > 3 ? new[3..new.length] : [new[2]]
+            p files
+            record.connections << Connection.new(:parent_id => new[1], :section => new[2], :files => files)
             records << record
           end
           show :add_window, {}, {:records => records}
