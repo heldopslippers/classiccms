@@ -82,6 +82,7 @@ module Classiccms
 
     #FROM Gem
     #require controllers
+    require File.join(File.dirname(__FILE__), 'controllers/application.rb')
     Dir[File.join(File.dirname(__FILE__), 'controllers/*.rb')].each {|file| require file }
 
     #FROM App

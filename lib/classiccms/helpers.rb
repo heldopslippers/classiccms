@@ -50,6 +50,14 @@ module Classiccms
       end
     end
 
+    def content_for(key, *args, &block)
+      @sections ||= Hash.new{ |k,v| k[v] = [] }
+      if block_given?
+        @sections[key] << block
+      else
+        @sections[key].inject(''){ |content, block| content << block.call(*args) } if @sections.keys.include?(key)
+      end
+    end
     #renders all child pages of the given position (id)
     def section(section_name, parent_id = nil)
       html = {}

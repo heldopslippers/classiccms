@@ -8,5 +8,6 @@ Classiccms.boot
 run Rack::URLMap.new({
   '/'    => Classiccms::WebsiteController,
   '/cms' => Classiccms::CMSController,
-  '/form'  => Classiccms::FormController
+  '/admin'  => Classiccms::AdminController,
+  '/form'  => Classiccms::FormController,
 })

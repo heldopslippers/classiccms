@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   #web server
   s.add_runtime_dependency "sinatra"
   s.add_runtime_dependency "sinatra-support"
+  s.add_runtime_dependency "sinatra-contrib"
   s.add_runtime_dependency "thin"
 
   #background processing

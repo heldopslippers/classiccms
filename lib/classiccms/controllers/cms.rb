@@ -16,19 +16,22 @@ module Classiccms
         begin
           params['cms'] = Base64.decode64(params['cms']).decrypt
           new_params= eval(params['cms'])
-          records = []
-          new_params.each do |new|
-            record = new[0].new
-            records.each do |i|
-              if i.kind_of? new[0]
-                record = i
-                records.delete(i)
+          records = []          
+          if new_params.first.class != Array
+            records << new_params.first.new
+          else
+            new_params.each do |new|
+              record = new[0].new
+              records.each do |i|
+                if i.kind_of? new[0]
+                  record = i
+                  records.delete(i)
+                end
               end
+              files = new.length > 3 ? new[3..new.length] : [new[2]]
+              record.connections << Connection.new(:parent_id => new[1], :section => new[2], :files => files)
+              records << record
             end
-            files = new.length > 3 ? new[3..new.length] : [new[2]]
-            p files
-            record.connections << Connection.new(:parent_id => new[1], :section => new[2], :files => files)
-            records << record
           end
           show :add_window, {}, {:records => records}
         rescue TypeError, ArgumentError
