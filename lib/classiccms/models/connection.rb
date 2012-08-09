@@ -3,7 +3,7 @@ class Connection
   embedded_in :base
 
 	field :order_id,  type: Integer, default: 0
-	field	:parent_id, type: BSON::ObjectId
+	field	:parent_id, type: Moped::BSON::ObjectId
   field :file,      type: String
   field :section,   type: String
 
@@ -12,7 +12,7 @@ class Connection
   validate :parent_id_should_exist
 
 	def parent_id_should_exist
-    if parent_id != nil and !Base.exists?(conditions: {id: parent_id})
+    if parent_id != nil and !Base.where(_id: parent_id).exists?
       errors.add :parent_id, "id doesn't exist"
     end
 	end

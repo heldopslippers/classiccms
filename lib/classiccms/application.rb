@@ -58,7 +58,7 @@ module Classiccms
 
     #FROM App
     #require mongoid
-    Mongoid.load!(File.join(Dir.pwd, 'config/mongoid.yml'))
+    Mongoid.load!(File.join(Dir.pwd, 'config/mongoid.yml'), ENV['RACK_ENV'])
 
     $app.configure do |d|
       d.url_format = '/assets/:job'

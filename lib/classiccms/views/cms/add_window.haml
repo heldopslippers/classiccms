@@ -7,7 +7,7 @@
     = show :form, {}, {:record => record}
     #edit_bottom
     #edit_bottom_nav
-      - if !record.new?
+      - if !record.new_record?
         .delete{:id => record.id}
         .delete_item item verwijderen
       .cancel

@@ -63,6 +63,7 @@ describe Classiccms do
   end
   it 'logout should destroy all session variables' do
     file 'haml', "= session[:user_id]" do
+      User.all.destroy
       u = create :user
       post '/login', {:username => u.username, :password => u.password}
       follow_redirect!

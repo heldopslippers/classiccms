@@ -108,7 +108,7 @@ module Classiccms
 
     #simple function that return id if user is allowed to sort the item
     def sort(object)
-      if object.kind_of? BSON::ObjectId or object.kind_of? String
+      if object.kind_of? Moped::BSON::ObjectId or object.kind_of? String
         object = Base.where(:_id => object).first
       end
       if @user != nil

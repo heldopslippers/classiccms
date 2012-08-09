@@ -1,5 +1,7 @@
 require 'mongoid'
-
+Mongoid::Fields.option :input do |model, field, value|
+  #model.validates_presence_of field if value
+end
 class Base
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -15,7 +17,7 @@ class Base
 
 
   def remove_slugs
-    Slug.where(:document_id => id).destroy
+    Slug.delete_all(:document_id => id)
   end
   def remove_connections
     records = Base.where(:'connections.parent_id' => id)

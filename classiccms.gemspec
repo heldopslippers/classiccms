@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rack-test"
 
   #database
-  s.add_runtime_dependency "mongoid", '2.4.11'
+  s.add_runtime_dependency "mongoid", '3.0.3'
   s.add_runtime_dependency "mongo", '1.6.2'
   s.add_runtime_dependency "bson_ext", '1.5'
 

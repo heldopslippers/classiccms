@@ -1,7 +1,7 @@
 defaults: &defaults
-  host: 127.0.0.1
-  port: 27017
   logger: false
+  hosts:
+    - localhost:27017
   # slaves:
   #   - host: slave1.local
   #     port: 27018
@@ -9,14 +9,23 @@ defaults: &defaults
   #     port: 27019
 
 development:
-  <<: *defaults
-  database: $_development
+  sessions:
+    default:
+      hosts:
+      - localhost:27017
+      database: $_development
 
 test:
-  <<: *defaults
-  database: $_test
+  sessions:
+    default:
+      hosts:
+      - localhost:27017
+      database: $_test
 
 # set these environment variables on your prod server
 production:
-  <<: *defaults
-  database: $
+  sessions:
+    default:
+      hosts:
+      - localhost:27017
+      database: $

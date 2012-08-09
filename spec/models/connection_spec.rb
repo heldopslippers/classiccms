@@ -30,7 +30,7 @@ describe :Connection do
     end
     it 'should not allow a string' do
       @connection.order_id = 'string'
-      @connection.valid?.should == false
+      @connection.order_id.should == 0
     end
     it 'should set 0 as default' do
       @connection.order_id.should == 0

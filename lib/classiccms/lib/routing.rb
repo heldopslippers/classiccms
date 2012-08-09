@@ -3,7 +3,7 @@ module Classiccms
 
     #in charge of get the first item of a given model (for menu items etc.)
     def get_first_item
-      Base.where(:_type => CONFIG[:model], :connections.matches => {:parent => nil, :section => CONFIG[:section], :order_id.lte => 1}).first
+      Base.where(:_type => CONFIG[:model], :'connections.parrent' => nil, :'connections.section' => CONFIG[:section], :'connections.order_id'.lte => 1).first
     end
 
     #This method will get you the most awesome route through a tree! (OMG!)

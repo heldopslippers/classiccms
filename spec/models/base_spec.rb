@@ -37,7 +37,7 @@ describe 'Base' do
     b1 = Base.create
     Slug.create(:document_id => b1.id)
     Slug.count.should == 1
-    b1.destroy
+    b1.destroy!
 
     Slug.count.should == 0
   end

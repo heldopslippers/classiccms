@@ -26,7 +26,7 @@ module Classiccms
     end
     get '/:id/?*' do
       response.headers['Cache-Control'] = 'no-cache'
-      pass unless Slug.exists?(conditions: {_id: params[:id]})
+      pass unless Slug.where(_id: params[:id]).exists?
       index = CONFIG[:home].kind_of?(String) ? CONFIG[:home] : 'application/index'
 
 

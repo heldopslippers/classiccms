@@ -18,10 +18,10 @@ require 'sinatra'
 set :environment, :test
 
 RSpec.configure do |config|
-  Mongoid.load!("spec/config/mongoid.yml")
+  Mongoid.load!("spec/config/mongoid.yml", :test)
 
   config.before(:each) do
-  	Mongoid.master.collections.reject { |c|  c.name =~ /^system./ }.each(&:drop)
+  	Mongoid.default_session.collections.select {|c| c.name !~ /system/ }.each(&:drop)
   end
   config.include Rack::Test::Methods
   config.include FactoryGirl::Syntax::Methods

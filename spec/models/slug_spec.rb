@@ -69,14 +69,13 @@ describe :Slug do
       @slug.id.should == 'string'
     end
     it 'should remove exissting slugs with the same id' do
-      slug = Slug.new document_id: Base.create.id
-      slug.set_id 'string'
-      slug.save
+      slug = Slug.create _id: 'string', document_id: Base.create.id
+      
 
       @slug.set_id 'string'
       @slug.save
 
-      Slug.count.should == 1
+      Slug.all.count.should == 1
     end
     it 'should sanetize the slug' do
       @slug.set_id 'test test'

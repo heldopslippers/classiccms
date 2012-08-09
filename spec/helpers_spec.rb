@@ -99,11 +99,10 @@ describe Classiccms do
     it 'should return the rendered file' do
       with_constants :CONFIG => {home: 'application/index4', model: 'Menu', section: 'menu'} do
         set_file "views/application/index4.haml", "= layout 'menu', 1"
-        create_dir 'views/Menu'
-        set_file "views/Menu/index.haml", "%h1 menu"
+        create_dir 'views/menu'
+        set_file "views/menu/index.haml", "%h1 menu"
 
         m = Menu.create connections: [Connection.new(section: 'menu', file: 'index')]
-        m.connections
 
         get '/'
         last_response.body.should == "<h1>menu</h1>\n"
