@@ -15,6 +15,14 @@
             %input{:type=> 'text', :name=> name, :value=> record[key], :class=>"textfield", :type=> "text"}
           - when 'textarea'
             %textarea{:id => key, :name=> name}= record[key]
+          - when 'date'
+            %select{:name=>"[#{model}][#{key}(3i)]"}
+              = select_options day_choices, record[key].day
+            %select{:name=>"[#{model}][#{key}(2i)]"}
+              = select_options month_choices, record[key].month
+
+            %select{:name=>"[#{model}][#{key}(1i)]"}
+              = select_options year_choices(0, 6), record[key].year
           - when 'dropdown'
           - when 'image'
             %p.image_select Selecteer image

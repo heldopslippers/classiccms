@@ -7,6 +7,7 @@ class Base
   include Mongoid::Timestamps
   include Mongoid::Versioning
   include Mongoid::Paranoia
+  include Mongoid::MultiParameterAttributes
 
   #associations
   embeds_many :connections

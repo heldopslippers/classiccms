@@ -70,6 +70,7 @@ module Classiccms
     post '/save' do
       content_type :json
       errors = []
+      p params
       params.each do |key, value|
         begin
           if value['id'] != nil
@@ -77,6 +78,7 @@ module Classiccms
           else
             record = Kernel.const_get(key).new
           end
+          p value
           record.update_attributes(value)
         rescue TypeError
         end

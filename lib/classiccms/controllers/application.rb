@@ -6,6 +6,8 @@ module Classiccms
   class ApplicationController < Sinatra::Base
     include  Classiccms::Routing
     register Sinatra::MultiRender
+    register Sinatra::DateForms
+    helpers Sinatra::HtmlHelpers
     helpers  Classiccms::Helpers
 
     set :multi_views,   [ File.join(Dir.pwd, 'views')]
