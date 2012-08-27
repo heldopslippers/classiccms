@@ -62,7 +62,10 @@ module Classiccms
         items = Base.where(_id: id)
         if items.count > 0
           item = items.first
-          item.connections.where(:section => section).update_all(:order_id => index+1)
+          item.connections.where(:section => section).each do |connection| 
+            connection.update_attribute(:order_id, index+1)
+          end
+          item.save
         end
       end
     end
@@ -70,7 +73,6 @@ module Classiccms
     post '/save' do
       content_type :json
       errors = []
-      p params
       params.each do |key, value|
         begin
           if value['id'] != nil
@@ -78,7 +80,6 @@ module Classiccms
           else
             record = Kernel.const_get(key).new
           end
-          p value
           record.update_attributes(value)
         rescue TypeError
         end
