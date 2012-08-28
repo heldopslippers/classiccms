@@ -26,9 +26,7 @@ Gem::Specification.new do |s|
 
   #database
   s.add_runtime_dependency "mongoid", '3.0.4'
-  s.add_runtime_dependency "mongo", '1.6.2'
-  s.add_runtime_dependency "bson_ext", '1.5'
-
+  
   #web server
   s.add_runtime_dependency "sinatra"
   s.add_runtime_dependency "sinatra-support"
