@@ -24,6 +24,8 @@
             %select{:name=>"[#{model}][#{key}(1i)]"}
               = select_options year_choices(0, 6), record[key].year
           - when 'dropdown'
+            %select{:name => name}
+              = select_options info.options[:options], record[key]
           - when 'image'
             %p.image_select Selecteer image
             %input{:type => 'hidden', :id => 'file_select', :name=> name, :value => record[key]}

@@ -2,6 +2,9 @@ require 'mongoid'
 Mongoid::Fields.option :input do |model, field, value|
   #model.validates_presence_of field if value
 end
+Mongoid::Fields.option :options do |model, field, value|
+  #model.validates_presence_of field if value
+end
 class Base
   include Mongoid::Document
   include Mongoid::Timestamps
