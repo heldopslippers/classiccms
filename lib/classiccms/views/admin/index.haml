@@ -46,9 +46,4 @@
                         %th= key
                     %th
                 %tbody
-                  - @records.each do |record|
-                    %tr
-                      - fields.each do |field|
-                        %td{:id => record.id}= record[field].to_s
-                      %td= edit record.id
               .dataTables_info= add @model
