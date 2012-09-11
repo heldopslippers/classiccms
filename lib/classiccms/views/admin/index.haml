@@ -29,7 +29,10 @@
       .fill
         .container
           - if @model != nil
-            %a{:href => "/admin/destroy/#{@model}"} Destroy All!
+            %input{:type => 'hidden', :name => 'model', :value => @model}
+            
+            %a{:href => "/admin/all/#{@model}"} Download CSV
+            %a{:style => 'float: right;', :href => "/admin/destroy/#{@model}"} Destroy All!
             %br
             %br
             #demo

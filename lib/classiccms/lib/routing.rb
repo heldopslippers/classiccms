@@ -8,6 +8,7 @@ module Classiccms
           return item
         end
       end
+      return nil
     end
 
     #This method will get you the most awesome route through a tree! (OMG!)

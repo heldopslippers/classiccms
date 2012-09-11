@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "rack-test"
 
+
   #database
   s.add_runtime_dependency "mongoid", '3.0.4'
   
@@ -31,7 +32,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "sinatra"
   s.add_runtime_dependency "sinatra-support"
   s.add_runtime_dependency "sinatra-contrib"
-  s.add_runtime_dependency "thin"
 
   #background processing
   s.add_runtime_dependency "celluloid", "~> 0.11.1"

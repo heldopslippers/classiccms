@@ -2,10 +2,8 @@ require "mongoid"
 require 'haml'
 require 'sinatra/base'
 require 'sinatra/support'
-require "sinatra"
-require 'thin'
+require 'sinatra'
 require 'tilt'
-require "tilt"
 require "haml"
 require "sass"
 require "slim"
