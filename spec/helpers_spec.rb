@@ -168,7 +168,7 @@ describe Classiccms do
         last_response.body.should == "<h1>#{m.id}</h1>\n"
       end
     end
-    it 'should return items base upon order_id' do
+    it 'should return items based upon order_id' do
       with_constants :CONFIG => {home: 'application/index5'} do
         set_file "views/application/index5.haml", "= section 'menu', 0"
         create_dir 'views/menu'

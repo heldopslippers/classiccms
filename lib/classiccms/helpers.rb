@@ -60,21 +60,23 @@ module Classiccms
     end
     #renders all child pages of the given position (id)
     def section(section_name, parent_id = nil)
-      html = {}
+      html = ""
       parent_id = get_parent_id(parent_id)
-
+      objects_to_render = {}
       Base.where(:'connections.parent_id' => parent_id, :'connections.section' => section_name, :'connections.file'.ne => nil).each do |record|
         connection = record.connections.where(:parent_id => parent_id, :section => section_name, :file.ne => nil).first
 
-        #render html
-        rendering = show connection.file, {views: ["app/views/#{record._type}", "app/views/#{record._type.downcase}"]}, {record: record}
-        if html[connection.order_id] == nil
-          html[connection.order_id] = rendering
+        if objects_to_render[connection.order_id] == nil
+          number = connection.order_id
         else
-          html[get_unique_number(html, connection.order_id)] = rendering
+          number = get_unique_number(objects_to_render, connection.order_id)
         end
+        objects_to_render[number] = {:record => record, :connection => connection}
       end
-      Hash[html.sort].map{|k,v| v}.join
+      Hash[objects_to_render.sort].each do |k, object|
+        html += show object[:connection].file, {views: ["app/views/#{object[:record]._type}", "app/views/#{object[:record]._type.downcase}"]}, {record: object[:record]}
+      end
+      return html
     end
     def get_unique_number(hash, number)
       if hash[number] == nil
