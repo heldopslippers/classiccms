@@ -6,7 +6,8 @@
     - model.fields.each do |key, info|
       .item
         - name = "[#{model}][#{key}]"
-        - if !["_type", "_id", "created_at", "updated_at", "version", "deleted_at"].include? key
+
+        - if info.options[:input] != nil
           %label{key: key}
             %a= key
             %p{:style => 'color: red;'}
@@ -16,6 +17,7 @@
           - when 'textarea'
             %textarea{:id => key, :name=> name}= record[key]
           - when 'date'
+            - record[key] = Date.today if record[key] == nil
             %select{:name=>"[#{model}][#{key}(3i)]"}
               = select_options day_choices, record[key].day
             %select{:name=>"[#{model}][#{key}(2i)]"}
@@ -31,8 +33,6 @@
             %input{:type => 'hidden', :id => 'file_select', :name=> name, :value => record[key]}
 
           - when 'images'
-          - else
-            %label Comming soon
     - if record.new_record?
       - record.connections.each do |connection|
         %input{:type=> 'hidden', :name=> "[#{record.class}][connections][][id]",      :value => connection.id}
