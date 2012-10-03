@@ -11,12 +11,24 @@ body .cke_dialog{
 	}
 .cke_skin_kama .cke_dialog_body{
 	z-index:1;
+	border:solid 1px #ddd;
+	padding:5px;
+	background-color:#fff;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
 	position:relative;
 }
 .cke_skin_kama .cke_dialog_tl,.cke_skin_kama .cke_dialog_tr,.cke_skin_kama .cke_dialog_tc,.cke_skin_kama .cke_dialog_bl,.cke_skin_kama .cke_dialog_br,.cke_skin_kama .cke_dialog_bc,.cke_skin_kama .cke_dialog_ml,.cke_skin_kama .cke_dialog_mr{
  display:none;
 }
 .cke_skin_kama .cke_dialog_title{
+	font-weight:bold;
+	font-size:14px;
+	padding:3px 3px 8px;
+	cursor:move;
+	position:relative;
+	border-bottom:1px solid #eee;
 }
 .cke_skin_kama .cke_browser_iequirks .cke_dialog_title,.cke_skin_kama .cke_browser_ie6 .cke_dialog_title,.cke_skin_kama .cke_browser_ie7 .cke_dialog_title{
 	margin-bottom:22px;
@@ -27,8 +39,30 @@ margin-bottom:10px;
 
 }
 .cke_skin_kama .cke_dialog_contents{
+	background-color:#ebebeb;
+	border:solid 1px #fff;
+	border-bottom:none;
+	overflow:auto;
+	padding:17px 10px 5px 10px;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	border-top-left-radius:5px;
+	border-top-right-radius:5px;
+	margin-top:22px;
 	}
 .cke_skin_kama .cke_dialog_footer{
+	text-align:right;
+	background-color:#ebebeb;
+	border:solid 1px #fff;
+	border-bottom:none;
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	-webkit-border-bottom-left-radius:5px;
+	-webkit-border-bottom-right-radius:5px;
+	border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;
 	}
 				.cke_skin_kama .cke_rtl .cke_dialog_footer{
 					text-align:left;
@@ -513,8 +547,7 @@ margin-bottom:10px;
 	width:260px;
 }
 .cke_skin_kama .cke_dialog_contents a.colorChooser{
+	display:block;margin-top:6px;margin-left:10px;width:80px;
 }
 .cke_skin_kama .cke_rtl .cke_dialog_contents a.colorChooser{
 	margin-right:10px;}
-	
-	
