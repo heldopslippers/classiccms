@@ -5,6 +5,38 @@ end
 Mongoid::Fields.option :options do |model, field, value|
   #model.validates_presence_of field if value
 end
+class ImageType
+  attr_reader :image_id
+
+  def initialize(image_id)
+    @image_id
+  end
+
+  class << self
+
+    # Get the object as it was stored in the database, and instantiate
+    # this custom class from it.
+    def demongoize(object_id)
+      Image.find(object_id).file
+    end
+
+    # Takes any possible object and converts it to how it would be
+    # stored in the database.
+    def mongoize(object_id)
+      object_id
+    end
+
+    # Converts the object that was supplied to a criteria and converts it
+    # into a database friendly form.
+    def evolve(object)
+      case object
+      when ImageType then object.mongoize
+      else object
+      end
+    end
+  end
+end
+
 class Base
   include Mongoid::Document
   include Mongoid::Timestamps
