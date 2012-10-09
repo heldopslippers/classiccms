@@ -3,21 +3,41 @@
   %head
     %meta{:'http-equiv' => 'Content-Type', :content => 'text/html; charset=utf-8'}
     %title 
-
-    %link{:rel=>'stylesheet', :href=>'/cms/css/reset.css', :type=> 'text/css'}
-    %link{:rel=>'stylesheet', :href=>'/cms/css/fonts.css', :type=> 'text/css'}
-    %link{:rel=>'stylesheet', :href=>'/cms/css/icons.css', :type=> 'text/css'}
-    %link{:rel=>'stylesheet', :href=>'/cms/css/popup.css', :type=> 'text/css'}
-    %link{:rel=>'stylesheet', :href=>'/cms/css/scrollbar.css', :type=> 'text/css'}
-    %link{:rel=>'stylesheet', :href=>'/cms/css/style.css', :type=> 'text/css'}
-    %link{:rel=>'stylesheet', :href=>'/cms/css/images.css', :type=> 'text/css'}
-
+    
+    %link{:rel=>'stylesheet', :href=>'/cms/bootstrap/css/bootstrap.min.css', :type=> 'text/css'}
+    /%link{:rel=>'stylesheet', :href=>'/cms/css/reset.css', :type=> 'text/css'}
+    /%link{:rel=>'stylesheet', :href=>'/cms/css/fonts.css', :type=> 'text/css'}
+    /%link{:rel=>'stylesheet', :href=>'/cms/css/icons.css', :type=> 'text/css'}
+    /%link{:rel=>'stylesheet', :href=>'/cms/css/popup.css', :type=> 'text/css'}
+    /%link{:rel=>'stylesheet', :href=>'/cms/css/scrollbar.css', :type=> 'text/css'}
+    /%link{:rel=>'stylesheet', :href=>'/cms/css/style.css', :type=> 'text/css'}
+    /%link{:rel=>'stylesheet', :href=>'/cms/css/images.css', :type=> 'text/css'}
+  %body#iki
+    .container{:style => 'margin-top: 20px'}
+      .row
+        .span4
+          - if request.params[:Type] != 'images'
+            .well.well-small
+              %ul.menu.nav.nav-list.bs-docs-sidenav
+                %li.active#images
+                  %a{:href => '#images'}
+                    %i.icon-camera
+                    Foto's
+                %li#files
+                  %a{:href => '#files'}
+                    %i.icon-file
+                    Bestanden
+          .well.well-small
+            %input{:type => 'hidden', :id => 'file_upload', :name=> 'file_upload'}
+            %input{:type => 'hidden', :name => 'return', :value => params[:CKEditorFuncNum]}
+            %br
+          .well.well-small#progress
+        .span7
+          .well.well-small.wrapper
+            = show :images
+            = show :files
+    /---- load js ----/
     %script{:type=>'text/javascript', :src=>'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'}
+    %script{:type=>'text/javascript', :src=>'/cms/bootstrap/js/bootstrap.min.js'}
     %script{:type=>'text/javascript', :src=>'/cms/js/uploadify/jquery.uploadify-3.1.min.js'}
     %script{:type=>'text/javascript', :src=>'/cms/js/images.js'}
-  %body
-    #iki
-      %input{:type => 'hidden', :name => 'return', :value => params[:CKEditorFuncNum]}
-      = show :browse
-
-

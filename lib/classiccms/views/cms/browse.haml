@@ -1,3 +1,6 @@
 #edit_bg.popup
   = show :images
+  - if params[:Type] != 'Images'
+    .test
+
   %input{:type => 'hidden', :id => 'file_upload', :name=> 'file_upload'}

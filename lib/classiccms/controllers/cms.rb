@@ -90,21 +90,32 @@ module Classiccms
       end
       return errors
     end
-    post '/upload/image' do
+    post '/upload' do
       image = Image.new
       image.file = params[:Filedata][:tempfile].read
       image.file.name = params[:Filedata][:filename]
-      image.save
-      show :images
+      if !image.save
+        file = Document.new
+        file.file = params[:Filedata][:tempfile].read
+        file.file.name = params[:Filedata][:filename]
+        file.save
+      end
+
+      return show(:images) + show(:files)
     end
     get '/images' do
       show :browse
     end
-    post '/image/destroy' do
-      image = Image.find(params[:id])
-      image.destroy
+    post '/file/destroy' do
+      image = Image.where(:id => params[:id]).first
+      p image
+      if image != nil
+        image.destroy
+      else
+        Document.where(:id => params[:id]).first.destroy
+      end
     end
-    get '/ckeditor/images' do
+    get '/ckeditor/files' do
       show :ckeditor
     end
 

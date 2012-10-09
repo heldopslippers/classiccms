@@ -1,46 +1,72 @@
-$ ->
-  new Image
 
-class Image
+$ ->
+  new Browser
+
+
+
+class Browser
   constructor: ->
     @p =
       images:   '.images'
-      image:    '.images .image img'
-      destroy:  '.images .image .destroy'
+      image:    'img'
+      destroy:  '.destroy'
       button:   '#file_upload'
     @listen()
-
+ 
   listen: ->
     $('#edit_bg').slideDown()
     @set_upload_button()
     @select()
     @destroy()
+    @add_tooltip()
+    $('ul.menu li').click (event) =>  @change_window($(event.currentTarget).attr('id'))
+
+  add_tooltip: ->
+    $('[rel=tooltip]').tooltip();
+  change_window: (id)->
+    console.log id
+    $('.menu li').removeClass('active')
+    $('#' + id).addClass('active')
+    if id == 'images'
+      $('.files').hide()
+    else
+      $('.images').hide()
+    $('.'+id).show()
 
   select: () ->
-    $('img').click ->
+    $('.item').click ->
       input = $('input').first().val()
       url = $(this).attr('url')
-      window.opener.CKEDITOR.tools.callFunction(input, url)
+      if input.length > 0
+        window.opener.CKEDITOR.tools.callFunction(input, url)
+      else
+        window.opener.$('#file_select').val($(this).attr('id'))
       self.close()
 
   destroy: () ->
-    $(@p.images + ' .image').live 'mouseover mouseout', (event) =>
-      if (event.type == 'mouseover')
-        $(event.currentTarget).find('.destroy').show()
-      else
-        $(event.currentTarget).find('.destroy').hide()
     $(@p.destroy).click (event) =>
-      id = $(event.currentTarget).parent().attr('id')
-      $('.images').find('#' + id).hide()
-      $.post '/cms/image/destroy', {id: id}
+      id = $(event.currentTarget).attr('data-id')
+      $('#' + id).hide()
+      $.post '/cms/file/destroy', {id: id}
 
   set_upload_button: ->
     if($('#file_upload').length != 0)
       $('#file_upload').uploadify
+        'buttonClass' : 'btn btn-info'
+        'buttonText'  : 'upload bestanden'
         'swf'      : '/cms/js/uploadify/uploadify.swf'
-        'uploader' : '/cms/upload/image'
+        'uploader' : '/cms/upload'
+        'queueID'  : 'file_queue'
+        'onSelect' : (file) =>
+          console.log(file)
+          $('#progress').append("<div class='alert alert-info' id='file-#{file.index}'><strong>"+ file.name + "</strong><button class='close' type='button' date-dismiss='alert'>x</button></div>")
+        'onUploadComplete' : (file) =>
+          $("#progress #file-#{file.index}").hide();
         'onUploadSuccess' : (file, data, response) =>
-          $(data).replaceAll(@p.images)
+          $('.wrapper').empty().append(data)
+          #$(data).replaceAll('.wrapper')
           @select()
           @destroy()
+          @add_tooltip()
+          @change_window($('ul.menu li.active').first().attr('id'))
 

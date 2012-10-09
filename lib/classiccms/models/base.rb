@@ -17,7 +17,12 @@ class ImageType
     # Get the object as it was stored in the database, and instantiate
     # this custom class from it.
     def demongoize(object_id)
-      Image.find(object_id).file
+      image = Image.where(:id => object_id).first
+      if image != nil
+        image.file
+      else
+        Dragonfly[:file].fetch_file(File.join(Dir.pwd, 'public/not_found.jpeg'))
+      end
     end
 
     # Takes any possible object and converts it to how it would be

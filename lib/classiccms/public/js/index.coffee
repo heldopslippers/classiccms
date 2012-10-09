@@ -1,3 +1,5 @@
+go = ()->
+  console.log 'woohoo'
 class Cms
   constructor: ->
     @input = 'input[name=cms]'
@@ -40,7 +42,9 @@ class Image
       images:   '#iki #edit_bg .images'
       image:    '#iki #edit_bg .images .image img'
       destroy:  '#iki #edit_bg .images .image .destroy'
-      button:   '#iki #edit_bg #file_upload'
+      button:   '#iki #file_upload'
+
+    window.open('/cms/ckeditor/files?input='+$(@input).attr('id'),'upload','width=960,height=750,left=200,top=100,screenX=200,screenY=100')
     @listen()
 
   listen: ->
@@ -171,9 +175,10 @@ class Editor
           { name: 'links', items : [ 'Link','Unlink','-'] },
           { name: 'tools', items : [ 'Maximize' ] }
         ],
-        filebrowserBrowseUrl : '/cms/ckeditor/images',
-        filebrowserWindowWidth : '640',
-        filebrowserWindowHeight : '480'
+        filebrowserBrowseUrl : '/cms/ckeditor/files',
+        filebrowserImageBrowseUrl : '/cms/ckeditor/files?Type=Images',
+        filebrowserWindowWidth : '960',
+        filebrowserWindowHeight : '750'
       }
   hover: ->
     $j(@p.buttons).mouseenter ->
