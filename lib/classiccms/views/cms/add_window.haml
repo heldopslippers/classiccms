@@ -2,13 +2,19 @@
   .background
   #logo
   #edit_box
-    /- records.each do |record|
-    - record = records.first if defined? records
-    = show :form, {}, {:record => record}
+    #edit_bg
+      - if records.count > 1
+        %ul.menu
+          - records.each_with_index do |record, i|
+            %li{:'data-cms-id' => record.class, :class => i > 0 ? '' : 'active' }= record.class
+        - records.each_with_index do |record, i|
+          = show :form, {}, {:record => record, :i => i}
+      - else
+        = show :form, {}, {:record => records.first, :i => 0}
     #edit_bottom
     #edit_bottom_nav
-      - if !record.new_record?
-        .delete{:id => record.id}
+      - if !records.first.new_record?
+        .delete{:id => records.first.id}
         .delete_item item verwijderen
       .cancel
       .save

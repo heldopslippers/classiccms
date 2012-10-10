@@ -1,0 +1,15 @@
+.files{:style => 'display:none;'}
+  %table.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th Naam
+        %th Upload datum
+        %th Grootte
+    %tbody
+      - Document.all.each do |document|
+        %tr.item{:id => document.id, :url => document.file.url}
+          %td= document.file.name
+          %td= document.created_at.strftime('%d-%m-%Y')
+          %td
+            %button.btn.btn-mini.btn-danger.destroy{:style => 'position: absolute;', :type => 'button', :'data-original-title' => 'Verwijder', :rel => 'tooltip', :'data-id' => document.id}
+              %i.icon-trash.icon-white

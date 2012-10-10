@@ -47,8 +47,7 @@ module Classiccms
       end
       records = Base.where(_id: params['cms'])
       if records.count > 0
-        record = records.first
-        show :add_window, {}, {:record => record}
+        show :add_window, {}, {:records => records}
       end
     end
     post '/destroy' do

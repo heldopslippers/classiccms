@@ -95,6 +95,7 @@ class TopPanel
       logo:          '#iki #logo'
       background:    '#iki .background'
       edit_box:      '#iki #edit_box'
+      menu:          '#iki #edit_box ul.menu li'
       form:          '#iki #edit_box form'
       cancel:        '#iki .cancel'
       create:        '#iki #edit_box .save'
@@ -107,13 +108,22 @@ class TopPanel
 
   listen: ->
     $j(@p.cancel).click => @hide()
+    $j(@p.menu).click => @menu_switch(event.target)
     $j(@p.create).click => @create('/cms/save')
     $j(@p.destroy).click (event) => @destroy('/cms/destroy', $j(event.target).attr('id'))
     $j(@p.image_select).click => new Image($j(event.target).next())
     @delete_button_hover()
+  
+  menu_switch: (object) ->
+    id = $(object).attr('data-cms-id')
+    $(@p.menu).removeClass('active')
+    $(@p.form).hide()
+    $(object).addClass('active')
+    $(@p.form + '[data-cms-id=' + id + ']').show()
+
 
   create: (url) ->
-    $j.post url, $j(@p.form).serialize(), (data) =>
+    $j.post url, $j(@p.form + ':visible').serialize(), (data) =>
       if data == null
         window.location.reload()
       else
