@@ -29,7 +29,10 @@
             = select_options info.options[:options], record[key]
         - when 'image'
           %p.image_select Selecteer image
-          %input{:type => 'hidden', :id => 'file_select', :name=> name, :value => record[key]}
+          %input{:type => 'hidden', :id => "file_#{key}", :name=> name, :value => record[key]}
+
+          %p{:id => "file_#{key}_preview", :style => 'float:left; clear:left;'}
+            %img{:src => record.send(key).thumb('50x50').url}
 
         - when 'images'
   - if record.new_record?

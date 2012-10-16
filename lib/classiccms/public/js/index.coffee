@@ -36,6 +36,7 @@ class Sort
     }
 
 class Image
+  #needs a rewrite
   constructor: (input) ->
     @input = input
     @p =
@@ -48,14 +49,14 @@ class Image
     @listen()
 
   listen: ->
-    $j('#edit_bg').slideUp()
-    $j.get '/cms/images', (data) =>
-      @form = $j('#edit_bg')
-      $j('#edit_bg').after(data)
-      @set_upload_button()
-      $j('#' + @input.val()).addClass('selected')
-      @select()
-      @destroy()
+    #$j('#edit_bg').slideUp()
+    #$j.get '/cms/images', (data) =>
+    #  @form = $j('#edit_bg')
+    #  $j('#edit_bg').after(data)
+    #  @set_upload_button()
+    #  $j('#' + @input.val()).addClass('selected')
+    #  @select()
+    #  @destroy()
 
   destroy: () ->
     $j(@p.images + ' .image').live 'mouseover mouseout', (event) =>

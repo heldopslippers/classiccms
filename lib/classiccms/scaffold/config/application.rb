@@ -3,4 +3,7 @@ module Classiccms
   $app = Dragonfly[:file].configure_with(:imagemagick)
   $app.define_macro_on_include(Mongoid::Document, :file_accessor)  
   $app.server.url_format = '/files/:job/:basename.:format'
+  $app.configure do |c|
+    c.allow_fetch_file = true
+  end
 end

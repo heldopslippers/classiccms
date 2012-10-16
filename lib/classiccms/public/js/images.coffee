@@ -6,6 +6,7 @@ $ ->
 
 class Browser
   constructor: ->
+    @input = $('#input').first().val()
     @p =
       images:   '.images'
       image:    'img'
@@ -34,13 +35,14 @@ class Browser
     $('.'+id).show()
 
   select: () ->
-    $('.item').click ->
-      input = $('input').first().val()
-      url = $(this).attr('url')
+    $('.item').click (event)=>
+      url = $(event.currentTarget).attr('url')
+      input = $('input[name=return]').first().val()
       if input.length > 0
         window.opener.CKEDITOR.tools.callFunction(input, url)
       else
-        window.opener.$('#file_select').val($(this).attr('id'))
+        window.opener.$('#' + @input).first().val($(event.currentTarget).attr('id'))
+        window.opener.$("##{@input}_preview img").attr('src', $(event.currentTarget).attr('src'))
       self.close()
 
   destroy: () ->

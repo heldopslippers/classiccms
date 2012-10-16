@@ -13,6 +13,7 @@
     /%link{:rel=>'stylesheet', :href=>'/cms/css/style.css', :type=> 'text/css'}
     /%link{:rel=>'stylesheet', :href=>'/cms/css/images.css', :type=> 'text/css'}
   %body#iki
+    %input{:type => 'hidden', :id => 'input', :value => params[:input]}
     .container{:style => 'margin-top: 20px'}
       .row
         .span4
