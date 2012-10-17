@@ -35,57 +35,13 @@ class Sort
         $j.post '/cms/sort', {section: section, order: order}
     }
 
-class Image
-  #needs a rewrite
+class Image 
   constructor: (input) ->
-    @input = input
-    @p =
-      images:   '#iki #edit_bg .images'
-      image:    '#iki #edit_bg .images .image img'
-      destroy:  '#iki #edit_bg .images .image .destroy'
-      button:   '#iki #file_upload'
+    window.open('/cms/ckeditor/files?input='+$(input).attr('id')+'&type=image','upload','width=960,height=750,left=200,top=100,screenX=200,screenY=100')
 
-    window.open('/cms/ckeditor/files?input='+$(@input).attr('id'),'upload','width=960,height=750,left=200,top=100,screenX=200,screenY=100')
-    @listen()
-
-  listen: ->
-    #$j('#edit_bg').slideUp()
-    #$j.get '/cms/images', (data) =>
-    #  @form = $j('#edit_bg')
-    #  $j('#edit_bg').after(data)
-    #  @set_upload_button()
-    #  $j('#' + @input.val()).addClass('selected')
-    #  @select()
-    #  @destroy()
-
-  destroy: () ->
-    $j(@p.images + ' .image').live 'mouseover mouseout', (event) =>
-      if (event.type == 'mouseover')
-        $j(event.currentTarget).find('.destroy').show()
-      else
-        $j(event.currentTarget).find('.destroy').hide()
-    $j(@p.destroy).click (event) =>
-      id = $j(event.currentTarget).parent().attr('id')
-      $j('.images').find('#' + id).hide()
-      $j.post '/cms/image/destroy', {id: id}
-
-  select: () ->
-    $j(@p.image).click (event) =>
-      $j(@p.image).parent().removeClass('selected')
-      $j(event.currentTarget).parent().addClass('selected')
-      $j(@input).val($j(event.currentTarget).parent().attr('id'))
-      $j('#edit_bg.popup').slideUp()
-      @form.slideDown()
-
-  set_upload_button: ->
-    if($j('#file_upload').length != 0)
-      $j('#file_upload').uploadify
-        'swf'      : '/cms/js/uploadify/uploadify.swf'
-        'uploader' : '/cms/upload/image'
-        'onUploadSuccess' : (file, data, response) =>
-          $j(data).replaceAll(@p.images)
-          @select()
-          @destroy()
+class Document 
+  constructor: (input) ->
+    window.open('/cms/ckeditor/files?input='+$(input).attr('id')+'&type=document','upload','width=960,height=750,left=200,top=100,screenX=200,screenY=100')
 
 
 class TopPanel
@@ -103,6 +59,7 @@ class TopPanel
       destroy:       '#iki #edit_box #edit_bottom_nav .delete'
       destroy_label: '#iki .delete_item'
       image_select:  '#iki .image_select'
+      document_select:  '#iki .document_select'
 
     @listen()
     @show()
@@ -113,6 +70,7 @@ class TopPanel
     $j(@p.create).click => @create('/cms/save')
     $j(@p.destroy).click (event) => @destroy('/cms/destroy', $j(event.target).attr('id'))
     $j(@p.image_select).click => new Image($j(event.target).next())
+    $j(@p.document_select).click => new Document($j(event.target).next())
     @delete_button_hover()
   
   menu_switch: (object) ->
@@ -172,7 +130,7 @@ class TopPanel
 class Editor
   constructor: ->
     @p =
-      textarea: '#edit_box textarea'
+      textarea: '#iki textarea'
       buttons: '#iki .cke_button a'
       config: {
         skin : 'kama',
@@ -203,6 +161,7 @@ class Editor
       $j(this).attr('title', title)
   add: ->
     $j(@p.textarea).each (index, element) =>
+      console.log 'wooh woop'
       $j(element).ckeditor(@p.config)
     @hover()
   remove: ->

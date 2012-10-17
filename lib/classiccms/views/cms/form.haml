@@ -14,7 +14,7 @@
         - when 'input'
           %input{:type=> 'text', :name=> name, :value=> record[key], :class=>"textfield", :type=> "text"}
         - when 'textarea'
-          %textarea{:id => key, :name=> name}= record[key]
+          %textarea{:id => key+rand(1...100).to_s, :name=> name}= record[key]
         - when 'date'
           - record[key] = Date.today if record[key] == nil
           %select{:name=>"[#{model}][#{key}(3i)]"}
@@ -33,6 +33,10 @@
 
           %p{:id => "file_#{key}_preview", :style => 'float:left; clear:left;'}
             %img{:src => record.send(key).thumb('50x50').url}
+        - when 'document'
+          %p.document_select Selecteer bestand
+          %input{:type => 'hidden', :id => "file_#{key}", :name=> name, :value => record[key]}
+          %p{:id => "file_#{key}_preview", :style => 'float:left; clear:left;'}= record.send(key).name
 
         - when 'images'
   - if record.new_record?

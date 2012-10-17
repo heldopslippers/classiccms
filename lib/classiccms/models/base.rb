@@ -41,6 +41,42 @@ class ImageType
     end
   end
 end
+class DocumentType
+  attr_reader :document_id
+
+  def initialize(document_id)
+    @document_id
+  end
+
+  class << self
+
+    # Get the object as it was stored in the database, and instantiate
+    # this custom class from it.
+    def demongoize(object_id)
+      document = Document.where(:id => object_id).first
+      if document != nil
+        document.file
+      else
+        Dragonfly[:file].fetch_file(File.join(Dir.pwd, 'public/not_found.jpeg'))
+      end
+    end
+
+    # Takes any possible object and converts it to how it would be
+    # stored in the database.
+    def mongoize(object_id)
+      object_id
+    end
+
+    # Converts the object that was supplied to a criteria and converts it
+    # into a database friendly form.
+    def evolve(object)
+      case object
+      when FileType then object.mongoize
+      else object
+      end
+    end
+  end
+end
 
 class Base
   include Mongoid::Document

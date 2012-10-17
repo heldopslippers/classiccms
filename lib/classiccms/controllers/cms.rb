@@ -95,8 +95,8 @@ module Classiccms
       image.file.name = params[:Filedata][:filename]
       if !image.save
         file = Document.new
-        file.file = params[:Filedata][:tempfile].read
-        file.file.name = params[:Filedata][:filename]
+        file.file = image.file.data
+        file.file.name = image.file.name
         file.save
       end
 
@@ -107,7 +107,6 @@ module Classiccms
     end
     post '/file/destroy' do
       image = Image.where(:id => params[:id]).first
-      p image
       if image != nil
         image.destroy
       else

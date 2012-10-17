@@ -2,18 +2,17 @@
 $ ->
   new Browser
 
-
-
 class Browser
   constructor: ->
     @input = $('#input').first().val()
+    @type = $('#type').first().val()
+
     @p =
       images:   '.images'
       image:    'img'
       destroy:  '.destroy'
       button:   '#file_upload'
     @listen()
- 
   listen: ->
     $('#edit_bg').slideDown()
     @set_upload_button()
@@ -24,6 +23,7 @@ class Browser
 
   add_tooltip: ->
     $('[rel=tooltip]').tooltip();
+
   change_window: (id)->
     console.log id
     $('.menu li').removeClass('active')
@@ -37,12 +37,15 @@ class Browser
   select: () ->
     $('.item').click (event)=>
       url = $(event.currentTarget).attr('url')
-      input = $('input[name=return]').first().val()
-      if input.length > 0
-        window.opener.CKEDITOR.tools.callFunction(input, url)
+      ckeditor = $('input[name=return]').first().val()
+      if ckeditor.length > 0
+        window.opener.CKEDITOR.tools.callFunction(ckeditor, url)
+      else if @type == 'document'
+        window.opener.$j('#' + @input).first().val($(event.currentTarget).attr('id'))
+        window.opener.$j('#' + @input + '_preview').empty().append($(event.currentTarget).attr('name'))
       else
-        window.opener.$('#' + @input).first().val($(event.currentTarget).attr('id'))
-        window.opener.$("##{@input}_preview img").attr('src', $(event.currentTarget).attr('src'))
+        window.opener.$j('#' + @input).first().val($(event.currentTarget).attr('id'))
+        window.opener.$j('#' + @input + '_preview img').attr('src', $(event.currentTarget).attr('src'))
       self.close()
 
   destroy: () ->
