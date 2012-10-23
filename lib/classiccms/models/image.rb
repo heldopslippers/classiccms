@@ -6,7 +6,7 @@ class Image
   field :file_name
 
   file_accessor :file
-  validates_property :format, :of => :file, :in => [:jpg, :jpeg, :png, :gif]
+  validates_property :format, :of => :file, :in => [:jpg, :jpeg, :png, :gif], :case_sensitive => false
 end
 
 class Document
