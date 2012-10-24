@@ -1,6 +1,4 @@
-vendor/**/*
 .bin/*
 .sass-cache/**
 .bundle/*
 assets/**/*
-Gemfile.lock
