@@ -3,4 +3,4 @@
     .span{:style => 'margin-bottom: 20px;', :id => image.id}
       %button.btn.btn-mini.btn-danger.destroy{:style => 'position: absolute;', :type => 'button', :'data-original-title' => 'Verwijder', :rel => 'tooltip', :'data-id' => image.id}
         %i.icon-trash.icon-white
-      %img.img-rounded.item{:style => 'height: 113px;', :id => image.id, :src => image.file.process(:thumb, '113x113#').url, :url => image.file.url, :name => image.file.name}
+      %img.img-rounded.item{:style => 'height: 113px;', :id => image.id, :src => image.file.process(:thumb, '113x113#').url, :url => image.file.process(:thumb, '700x700').url, :name => image.file.name}
