@@ -8,14 +8,14 @@ module Classiccms
 
     #insert the header for CMS to work
     def cms
-      if defined? @user
+      if @user != nil and @user.admin?
         show :header, views: File.join(Classiccms::ROOT, 'views/cms')
       end
     end
 
     #insert the logout button
     def logout
-      if @user != nil
+      if @user != nil and @user.admin?
         show :logout, views: File.join(Classiccms::ROOT, 'views/cms')
       end
     end
@@ -92,7 +92,7 @@ module Classiccms
           item[1] = get_parent_id(item[1])
         end
       end
-      if @user != nil
+      if @user != nil and @user.admin?
         info = Base64.encode64(items.to_s.encrypt)
         show :add, {views: File.join(Classiccms::ROOT, 'views/cms')}, {encrypteddata: info}
       end
@@ -101,7 +101,7 @@ module Classiccms
     #returns the html for edit button
     def edit(id)
       records = Base.where(_id: id)
-      if records.count > 0 and @user != nil
+      if records.count > 0 and @user != nil and @user.admin?
         info = Base64.encode64 records.first.id.to_s.encrypt
 
         show :edit, {views: File.join(Classiccms::ROOT, 'views/cms')}, {encrypteddata: info}
@@ -113,7 +113,7 @@ module Classiccms
       if object.kind_of? Moped::BSON::ObjectId or object.kind_of? String
         object = Base.where(:_id => object).first
       end
-      if @user != nil
+      if @user != nil and @user.admin?
         object.id.to_s
       end
     end
