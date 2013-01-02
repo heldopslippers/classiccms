@@ -8,14 +8,14 @@ module Classiccms
 
     #insert the header for CMS to work
     def cms
-      if @user != nil and @user.admin?
+      if @user != nil and @user.admin?(@routes)
         show :header, views: File.join(Classiccms::ROOT, 'views/cms')
       end
     end
 
     #insert the logout button
     def logout
-      if @user != nil and @user.admin?
+      if @user != nil and @user.admin?(@routes)
         show :logout, views: File.join(Classiccms::ROOT, 'views/cms')
       end
     end
@@ -92,7 +92,7 @@ module Classiccms
           item[1] = get_parent_id(item[1])
         end
       end
-      if @user != nil and @user.admin?
+      if @user != nil and @user.admin?(@routes)
         info = Base64.encode64(items.to_s.encrypt)
         show :add, {views: File.join(Classiccms::ROOT, 'views/cms')}, {encrypteddata: info}
       end
@@ -101,7 +101,7 @@ module Classiccms
     #returns the html for edit button
     def edit(id)
       records = Base.where(_id: id)
-      if records.count > 0 and @user != nil and @user.admin?
+      if records.count > 0 and @user != nil and @user.admin?(@routes)
         info = Base64.encode64 records.first.id.to_s.encrypt
 
         show :edit, {views: File.join(Classiccms::ROOT, 'views/cms')}, {encrypteddata: info}
@@ -113,7 +113,7 @@ module Classiccms
       if object.kind_of? Moped::BSON::ObjectId or object.kind_of? String
         object = Base.where(:_id => object).first
       end
-      if @user != nil and @user.admin?
+      if @user != nil and @user.admin?(@routes)
         object.id.to_s
       end
     end
