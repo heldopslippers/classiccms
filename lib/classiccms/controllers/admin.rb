@@ -7,6 +7,10 @@ module Classiccms
     set :multi_views,   [File.join(Classiccms::ROOT, 'views/admin'), File.join(Classiccms::ROOT, 'public')]
     set :root, Dir.pwd
     set :public_folder, Proc.new { File.join(Classiccms::ROOT, 'public/admin') }
+    before do
+      pass if @user != nil
+      redirect '/login'
+    end
 
     get '/' do
       show 'index'
