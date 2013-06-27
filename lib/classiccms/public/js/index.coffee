@@ -66,11 +66,11 @@ class TopPanel
 
   listen: ->
     $j(@p.cancel).click => @hide()
-    $j(@p.menu).click => @menu_switch(event.target)
+    $j(@p.menu).click (event) => @menu_switch(event.target)
     $j(@p.create).click => @create('/cms/save')
     $j(@p.destroy).click (event) => @destroy('/cms/destroy', $j(event.target).attr('id'))
-    $j(@p.image_select).click => new Image($j(event.target).next())
-    $j(@p.document_select).click => new Document($j(event.target).next())
+    $j(@p.image_select).click (event) => new Image($j(event.target).next())
+    $j(@p.document_select).click (event) => new Document($j(event.target).next())
     @delete_button_hover()
   
   menu_switch: (object) ->
