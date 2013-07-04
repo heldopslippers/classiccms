@@ -9,7 +9,7 @@ class Cms
     this.listen('/cms/edit', '.iki_IconEdit')
 
   listen: (url, button) ->
-    $j(button).live 'click', (event) =>
+    $j(button).on 'click', (event) =>
       this.load url, $j(event.target).find(@input).val()
   load: (url, cms) ->
     $j.post url, {cms: cms}, (data) =>
@@ -82,12 +82,12 @@ class TopPanel
 
 
   create: (url) ->
-    $j.post url, $j(@p.form + ':visible').serialize(), (data) =>
-      if data == null
-        window.location.reload()
-      else
-        $j.each data, (index, value)=>
-          $j(@p.form).find("label[key=#{index}] p").text(value[0])
+    request = $j.ajax(url: url, type: 'POST', data: $j(@p.form + ':visible').serialize(), dataType: 'json')
+    request.fail =>
+      window.location.reload()
+    request.done (data) =>
+      $j.each data, (index, value)=>
+        $j(@p.form).find("label[key=#{index}] p").text(value[0])
 
   destroy: (url, id) ->
     $j.post url, {id: id}, ->
