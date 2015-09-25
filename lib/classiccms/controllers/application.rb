@@ -9,15 +9,17 @@ module Classiccms
     register Sinatra::DateForms
     helpers Sinatra::HtmlHelpers
     helpers  Classiccms::Helpers
-
+    
+    
     set :multi_views,   [ File.join(Dir.pwd, 'views')]
     set :root, Dir.pwd
     set :public_folder, Proc.new { File.join(Dir.pwd, 'public') }
-    set :session_secret, '427a474a206b616e5c4f2a4f3c7d2d517e2a564e21556e24593363253e'
-
-    enable :sessions
-
+    
+    #enable :sessions
+    use Rack::Session::Cookie, :key => 'rack.session', :path => '/', :secret => '427a474a206b616e5c4f2a4f3c7d2d517e2a564e21556e24593363253e'
     before do
+      p session
+      
       if User.where(:_id => session[:user_id]).count > 0
         @user = User.find(session[:user_id]) if session[:user_id] != nil
       else
